@@ -5,12 +5,19 @@ server:
 #        min-spare-threads: 30
   port: 8080
 #    uri-encoding: utf-8
-  context-path: /bootma
-  
+#  context-path: /bootma
+
+#TRACE, DEBUG, INFO, WARN, ERROR
+logging:
+  level:
+    root: info
+    cn.maaa: debug
 mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
   mapper-locations: mybatis/**/*.xml
   typeAliasesPackage: cn.maaa.system.domain  
-  
+
 # 分页配置
 PageInterceptor:
   helper-dialect: mysql
@@ -23,6 +30,14 @@ spring:
   profiles:
     active: config/freemarker
 
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:config/ehcache.xml
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver

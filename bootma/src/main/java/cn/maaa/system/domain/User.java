@@ -8,7 +8,7 @@ import java.util.List;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    //
+    //用户ID
     private Long userId;
     // 用户名
     private String username;

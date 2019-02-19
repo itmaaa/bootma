@@ -15,7 +15,7 @@ public class TestController {
 		@GetMapping("/test")
 		public String testFreeMarker(Model model){
 			/** 添加响应数据 */
-			model.addAttribute("tip", "测试数据");
+			model.addAttribute("tip", "测试数据更新了...");
 			/** 返回视图 */
 			return "test";
 		}
@@ -26,8 +26,8 @@ public class TestController {
 		@Value("${server.port}")
 		private String port;
 		
-		@Value("${server.context-path}")
-		private String path;
+		/*@Value("${server.context-path}")
+		private String path;*/
 		
 		
 		@ResponseBody
@@ -37,7 +37,7 @@ public class TestController {
 			System.out.println(env.getProperty("server.context-path"));
 			
 			System.out.println("@value-port="+port);
-			System.out.println("@value-context-path="+path);
+			//System.out.println("@value-context-path="+path);
 			return "Hello World";
 		}
 
