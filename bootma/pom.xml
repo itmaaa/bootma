@@ -61,31 +61,17 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- mybatis -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.4.4</version>
-		</dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.0.7.1</version>
+        </dependency>
 		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		
-		<!-- 分页插件 -->
-	    <dependency>
-		    <groupId>com.github.pagehelper</groupId>
-		    <artifactId>pagehelper-spring-boot-starter</artifactId>
-		    <version>1.2.3</version>
-		</dependency>
-
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -157,6 +143,12 @@
 			<version>3.6</version>
 		</dependency>
 
+		<!-- 配置devtools开启热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
 		<!-- 配置测试启动器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -164,12 +156,6 @@
 		</dependency>
 
 
-		<!-- 配置devtools开启热部署 -->
-		 <dependency>
-				 <groupId>org.springframework.boot</groupId>
-				 <artifactId>spring-boot-devtools</artifactId>
-			</dependency>
-		
 	</dependencies>
 
 </project>

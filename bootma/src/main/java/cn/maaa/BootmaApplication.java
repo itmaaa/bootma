@@ -8,9 +8,9 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication // 代表为SpringBoot应用的运行主类
 @MapperScan("cn.maaa.**.mapper")
 @EnableCaching
-public class Application {
+public class BootmaApplication {
 	public static void main(String[] args) {
 		/** 运行SpringBoot应用 */
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(BootmaApplication.class, args);
 	}
 }

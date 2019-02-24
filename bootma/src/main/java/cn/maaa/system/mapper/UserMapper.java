@@ -2,6 +2,7 @@ package cn.maaa.system.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import cn.maaa.system.domain.User;
@@ -13,10 +14,8 @@ import cn.maaa.system.domain.User;
  * @date 2017-10-03 09:45:11
  */
 // @Mapper
-public interface UserMapper {
-
-	
-	List<User> list(User user);
+public interface UserMapper extends BaseMapper<User> {
 
 	User selectOne(User user);
+
 }

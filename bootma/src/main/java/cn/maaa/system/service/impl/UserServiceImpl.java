@@ -2,6 +2,8 @@ package cn.maaa.system.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.injector.methods.SelectList;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,6 @@ import cn.maaa.system.service.UserService;
 //@CacheConfig(cacheNames = "user")
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
-    @Autowired
-    UserMapper userMapper;
-    
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
-
-    @Override
-    public List<User> list(User user) {
-        return userMapper.list(user);
-    }
-
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
 
 }
