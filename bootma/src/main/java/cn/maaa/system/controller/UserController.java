@@ -32,9 +32,10 @@ public class UserController extends BaseController {
 	UserService userService;
 
 	@GetMapping("")
-	//String user(Model model,User user,int pageNum, int pageSize ) {
-	String user(Model model) {
-		IPage<User>  page = list(null,1,10);
+	String user(Model model,User user,
+				@RequestParam(name = "offset",defaultValue = "0") int offset,
+				@RequestParam(name = "limit",defaultValue = "10") int limit ) {
+		IPage<User>  page = list(user,offset,limit);
 		model.addAttribute("pageInfo", page);
 		return prefix + "/user";
 	}
@@ -42,7 +43,7 @@ public class UserController extends BaseController {
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
-		int pageNum =(offset-1)/limit;
+		int pageNum =offset/limit;
 		PageInfo<User> pageInfo = new PageInfo<>();
 		pageInfo.setSize(limit);
 		pageInfo.setCurrent(pageNum);
@@ -70,7 +71,6 @@ public class UserController extends BaseController {
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if(userService.saveOrUpdate(user)){
-			System.out.println("id:"+user.getId());
 			return Ma.ok();
 		}
 		return Ma.error();
