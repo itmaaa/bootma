@@ -1,5 +1,6 @@
 package cn.maaa.system.controller;
 
+import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.MD5Utils;
@@ -19,7 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -29,13 +32,12 @@ public class LoginController extends BaseController {
     MenuService menuService;
 
 
-    Logger logger = LoggerFactory.getLogger(LoginController.class);
-
     @GetMapping({ "/", "" })
     String welcome(Model model) {
         return "redirect:/index";
     }
 
+    @OperLog("访问登录页面")
     @GetMapping("/login")
     String login() {
         //已登录再访问/login直接进入index
@@ -45,6 +47,7 @@ public class LoginController extends BaseController {
         return "login";
     }
 
+    @OperLog("用户登录")
     @PostMapping("/login")
     @ResponseBody
     Ma ajaxLogin(String username, String password) {
@@ -59,14 +62,20 @@ public class LoginController extends BaseController {
         }
     }
 
+    @OperLog("访问首页")
     @GetMapping({ "/index" })
-    String index(Model model) {
-        List<Tree<Menu>> menus = menuService.listMenuTree(getUserId());
-        model.addAttribute("menus", menus);
-        model.addAttribute("picUrl","/img/photo_s.jpg");
-        model.addAttribute("username", getUser().getUsername());
-        model.addAttribute("name", getUser().getName());
-        return "index";
+	ModelAndView index() {
+		ModelAndView mav = new ModelAndView();
+		HashMap<String, Object> map = new HashMap<>();
+		List<Tree<Menu>> menus = menuService.listMenuTree(getUserId());
+        map.put("menus", menus);
+        map.put("picUrl","/img/photo_s.jpg");
+        map.put("username", getUser().getUsername());
+		map.put("name", getUser().getName());
+
+        mav.addAllObjects(map);
+        mav.setViewName("index");
+        return mav;
     }
 
     /*shiroConfig中配置了filterChainDefinitionMap.put("/logout", "logout");
@@ -81,6 +90,7 @@ public class LoginController extends BaseController {
         return "redirect:/login";
     }
 
+    @OperLog("主页前言")
     @GetMapping("/main")
     String main() {
         return "main";

@@ -1,4 +1,4 @@
-package cn.maaa.common.Constants;
+package cn.maaa.common.constants;
 
 /**
  * 描述信息

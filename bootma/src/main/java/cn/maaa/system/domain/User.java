@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @TableName("sys_user")
+@Accessors(chain = true)
 public class User implements Serializable {
     private static final long serialVersionUID = -4239956042079783057L;
     //用户ID

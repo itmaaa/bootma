@@ -1,19 +1,15 @@
 package cn.maaa.system.controller;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
-import cn.maaa.common.Constants.SystemConst;
+import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.common.utils.Ma;
 import cn.maaa.common.utils.PageInfo;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.R;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,24 +22,21 @@ import cn.maaa.system.service.UserService;
 @Controller
 public class UserController extends BaseController {
 	
-	private String prefix="system"  ;
+	private String prefix="system" ;
 	
 	@Autowired
 	UserService userService;
 
+	@OperLog("访问用户列表")
 	@GetMapping("")
-	String user(Model model,User user,
-				@RequestParam(name = "offset",defaultValue = "0") int offset,
-				@RequestParam(name = "limit",defaultValue = "10") int limit ) {
-		IPage<User>  page = list(user,offset,limit);
-		model.addAttribute("pageInfo", page);
+	String user(Model model) {
 		return prefix + "/user";
 	}
 
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
-		int pageNum =offset/limit;
+		int pageNum =offset/limit + 1;
 		PageInfo<User> pageInfo = new PageInfo<>();
 		pageInfo.setSize(limit);
 		pageInfo.setCurrent(pageNum);
@@ -51,11 +44,13 @@ public class UserController extends BaseController {
 		return page;
 	}
 
+    @OperLog("添加用户")
 	@GetMapping(value = {"/add"})
 	String add(Model model) {
 		return prefix+"/add";
 	}
 
+	@OperLog("编辑用户")
 	@GetMapping(value = {"/edit/{id}"})
 	String edit(Model model, @PathVariable(value = "id",required = false) Long id) {
 		User user = userService.getById(id);
@@ -63,6 +58,7 @@ public class UserController extends BaseController {
 		return prefix+"/edit";
 	}
 
+	@OperLog("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
 	Ma save(User user) {
@@ -76,6 +72,7 @@ public class UserController extends BaseController {
 		return Ma.error();
 	}
 
+	@OperLog("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
 	Ma remove(Long id) {
@@ -88,6 +85,7 @@ public class UserController extends BaseController {
 		return Ma.error();
 	}
 
+	@OperLog("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	Ma batchRemove(@RequestParam("ids[]") Long[] ids) {

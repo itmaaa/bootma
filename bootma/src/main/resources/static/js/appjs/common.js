@@ -52,7 +52,6 @@ function batchRemove() {
         // 按钮
     }, function() {
         var ids = new Array();
-        debugger;
         // 遍历所有选择的行数据，取每条数据对应的ID
         $.each(rows, function(i, row) {
             ids[i] = row[selectField];
