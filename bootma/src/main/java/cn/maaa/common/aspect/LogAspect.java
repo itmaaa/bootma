@@ -22,6 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -79,11 +80,14 @@ public class LogAspect {
 		log.setMethod(className + "." + methodName + "()");
 		// 请求的参数
 		Object[] args = joinPoint.getArgs();
-		try {
-			String params = JsonUtils.beanToJson(args[0]);
-			log.setParams(params);
-		} catch (Exception e) {
-			logger.error("日志参数设置异常：{}", ExceptionUtils.errorMsg(e));
+		if(args.length != 0 ){
+			try {
+				//String params = JsonUtils.beanToJson(args[0]);
+				String params = Arrays.toString(args);
+				log.setParams(params);
+			} catch (Exception e) {
+				logger.error("日志参数设置异常：{}", ExceptionUtils.errorMsg(e));
+			}
 		}
 		// 获取request
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();

@@ -1,6 +1,5 @@
 var prefix = "/common/log"
-//批量筛选字段
-var  selectField = 'id';
+
 //模块名称
 var module = "用户"
 

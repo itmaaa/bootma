@@ -1,31 +1,36 @@
 package cn.maaa.system.controller;
 
-import java.util.Arrays;
-
 import cn.maaa.common.annotation.OperLog;
-import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
-import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.common.utils.M;
-import cn.maaa.common.utils.PageInfo;
+import cn.maaa.common.utils.MD5Utils;
+import cn.maaa.system.domain.User;
+import cn.maaa.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import cn.maaa.system.domain.User;
-import cn.maaa.system.service.UserService;
+import javax.annotation.Resource;
 
 @RequestMapping("/sys/user")
 @Controller
-public class UserController extends BaseController {
+public class UserController extends BaseController<User> {
 	
-	private String prefix="system" ;
-	
-	@Autowired
+	private String prefix="system/user" ;
+
 	UserService userService;
+
+	/**
+	 * 传递给basecontroller指定Iservice的实际类型
+	 */
+	@Resource
+	public void setUserService(UserService userService){
+		this.userService = userService;
+		super.setService(userService);
+	}
+
 
 	@GetMapping("")
 	String user(Model model) {
@@ -36,12 +41,7 @@ public class UserController extends BaseController {
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
-		int pageNum =offset/limit + 1;
-		PageInfo<User> pageInfo = new PageInfo<>();
-		pageInfo.setSize(limit);
-		pageInfo.setCurrent(pageNum);
-		IPage<User> page = userService.page(pageInfo);
-		return page;
+		return super.page(user,offset ,limit );
 	}
 
     @OperLog("添加用户")
@@ -62,40 +62,22 @@ public class UserController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	M save(User user) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-		if(userService.saveOrUpdate(user)){
-			return M.ok();
-		}
-		return M.error();
+		return super.insertOrUpdate(user);
 	}
 
 	@OperLog("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
 	M remove(Long id) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(userService.removeById(id)){
-			return M.ok();
-		}
-		return M.error();
+		return super.delete(id);
 	}
 
 	@OperLog("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	M batchRemove(@RequestParam("ids[]") Long[] ids) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(userService.removeByIds(Arrays.asList(ids))){
-			return M.ok();
-		}
-		return M.error();
+		return super.batchDelete(ids);
 	}
 
 	@PostMapping("/exist")

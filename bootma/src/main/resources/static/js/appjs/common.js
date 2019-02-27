@@ -54,7 +54,7 @@ function batchRemove() {
         var ids = new Array();
         // 遍历所有选择的行数据，取每条数据对应的ID
         $.each(rows, function(i, row) {
-            ids[i] = row[selectField];
+            ids[i] = row['id'];
         });
         $.ajax({
             type : 'POST',

@@ -22,6 +22,7 @@ public class PageInfo<T> extends Page<T> {
     @Override
     public Page<T> setRecords(List<T> records) {
         this.rows = records;
-        return super.setRecords(records);
+        //return super.setRecords(records);
+		return this;
     }
 }

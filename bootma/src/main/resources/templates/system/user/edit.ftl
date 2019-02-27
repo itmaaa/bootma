@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
-<#include '../header.ftl'/>
+<#include '../../header.ftl'/>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
 		<div class="row">
@@ -69,7 +69,7 @@
 			</div>
 		</div>
 	</div>
-	<#include '../footer.ftl'/>
+	<#include '../../footer.ftl'/>
 	<script type="text/javascript" src="/js/appjs/sys/user/edit.js">
 	</script>
 </body>

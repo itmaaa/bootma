@@ -85,7 +85,23 @@ INSERT INTO `sys_user`  VALUES ('135', 'wjl', '王健林', '3967697dfced162cf6a3
 INSERT INTO `sys_user`  VALUES ('136', 'gdg', '郭德纲', '3bb1bda86bc02bf6478cd91e42135d2f', '9', 'gdg@bootdo.com', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
--- 补充日志菜单 2019/2/26
+-- 补充日志菜单
+-- 2019/02/26
 -- ----------------------------
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('27', '91', '系统日志', 'common/log', 'common:log', '1', 'fa fa-warning', '0', '2017-08-14 22:11:53', NULL);
 INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('91', '0', '系统监控', '', '', '0', 'fa fa-video-camera', '5', NULL, NULL);
+-- 2019/02/27
+INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('7', '3', '角色管理', 'sys/role', 'sys:role:role', '1', 'fa fa-paw', '1', '2017-08-10 14:13:19', NULL);
+-- 新建角色表
+CREATE TABLE `sys_role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(100) DEFAULT NULL COMMENT '角色名称',
+  `role_sign` varchar(100) DEFAULT NULL COMMENT '角色标识',
+  `remark` varchar(100) DEFAULT NULL COMMENT '备注',
+  `user_id_create` bigint(255) DEFAULT NULL COMMENT '创建用户id',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  `gmt_modified` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色';
+INSERT INTO `sys_role`  VALUES ('1', '超级用户角色', 'admin', '拥有最高权限', '2', '2017-08-12 00:43:52', '2017-08-12 19:14:59');
+INSERT INTO `sys_role`  VALUES ('59', '普通用户', NULL, '基本用户权限', NULL, NULL, NULL);

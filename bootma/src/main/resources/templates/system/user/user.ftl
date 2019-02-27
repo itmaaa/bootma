@@ -2,7 +2,7 @@
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
-<#include '../header.ftl'/>
+<#include '../../header.ftl'/>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
 		<div class="row">
@@ -54,7 +54,7 @@
         </script>
 
 
-	<#include '../footer.ftl'/>
+	<#include '../../footer.ftl'/>
 	<script type="text/javascript" src="/js/appjs/sys/user/user.js"></script>
 
 

@@ -25,8 +25,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String userName = (String) token.getPrincipal();
         String password = new String((char[]) token.getCredentials());
-        User user = new User();
-        user.setUsername(userName);
+        User user = new User().setUsername(userName);
         User dbUser = userMapper.selectOne(user);
         // 账号不存在
         if (dbUser == null) {
