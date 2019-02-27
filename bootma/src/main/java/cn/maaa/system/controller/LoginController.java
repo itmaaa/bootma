@@ -4,7 +4,7 @@ import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.MD5Utils;
-import cn.maaa.common.utils.Ma;
+import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.ShiroUtils;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.service.MenuService;
@@ -12,8 +12,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,15 +48,15 @@ public class LoginController extends BaseController {
     @OperLog("用户登录")
     @PostMapping("/login")
     @ResponseBody
-    Ma ajaxLogin(String username, String password) {
+	M ajaxLogin(String username, String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, MD5Utils.encrypt(password));
         try {
             //调用login方法会进入realm中执行认证操作
             subject.login(token);
-            return Ma.ok();
+            return M.ok();
         } catch (AuthenticationException e) {
-            return Ma.error(e.getMessage());
+            return M.error(e.getMessage());
         }
     }
 

@@ -2,7 +2,7 @@ package cn.maaa.system.controller;
 
 import cn.maaa.common.annotation.OperLog;
 import cn.maaa.system.domain.Log;
-import cn.maaa.common.utils.Ma;
+import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.PageInfo;
 import cn.maaa.system.service.LogService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -48,20 +48,20 @@ public class LogController {
 	@OperLog("删除日志")
 	@PostMapping("/remove")
 	@ResponseBody
-	Ma remove(Long id) {
+	M remove(Long id) {
 		if(logService.removeById(id)){
-			return Ma.ok();
+			return M.ok();
 		}
-		return Ma.error();
+		return M.error();
 	}
 
 	@OperLog("批量删除日志")
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	Ma batchRemove(@RequestParam("ids[]") Long[] ids) {
+	M batchRemove(@RequestParam("ids[]") Long[] ids) {
 		if(logService.removeByIds(Arrays.asList(ids))){
-			return Ma.ok();
+			return M.ok();
 		}
-		return Ma.error();
+		return M.error();
 	}
 }

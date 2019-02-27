@@ -6,7 +6,7 @@ import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.MD5Utils;
-import cn.maaa.common.utils.Ma;
+import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.PageInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -27,12 +27,12 @@ public class UserController extends BaseController {
 	@Autowired
 	UserService userService;
 
-	@OperLog("访问用户列表")
 	@GetMapping("")
 	String user(Model model) {
 		return prefix + "/user";
 	}
 
+	@OperLog("访问用户列表")
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
@@ -61,41 +61,41 @@ public class UserController extends BaseController {
 	@OperLog("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
-	Ma save(User user) {
+	M save(User user) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return Ma.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		if(userService.saveOrUpdate(user)){
-			return Ma.ok();
+			return M.ok();
 		}
-		return Ma.error();
+		return M.error();
 	}
 
 	@OperLog("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
-	Ma remove(Long id) {
+	M remove(Long id) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return Ma.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if(userService.removeById(id)){
-			return Ma.ok();
+			return M.ok();
 		}
-		return Ma.error();
+		return M.error();
 	}
 
 	@OperLog("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
-	Ma batchRemove(@RequestParam("ids[]") Long[] ids) {
+	M batchRemove(@RequestParam("ids[]") Long[] ids) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
-			return Ma.error(1, "演示系统不允许修改,完整体验请部署程序");
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if(userService.removeByIds(Arrays.asList(ids))){
-			return Ma.ok();
+			return M.ok();
 		}
-		return Ma.error();
+		return M.error();
 	}
 
 	@PostMapping("/exist")
