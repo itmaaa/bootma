@@ -1,5 +1,6 @@
 package cn.maaa.common.aspect;
 
+import cn.maaa.common.annotation.Convert;
 import cn.maaa.common.utils.ExceptionUtils;
 import cn.maaa.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
 
 /**
  * xxx
@@ -39,6 +42,26 @@ public class CovertAspect {
 			try {
 				String params = JsonUtils.beanToJson(args);
 				System.out.println(params);
+				Object source = args[0];
+				Object target = args[1];
+				Field[] field = source.getClass().getDeclaredFields();
+				if(field != null){
+					for(Field fie : field){
+						if(!fie.isAccessible()){
+							fie.setAccessible(true);
+						}
+
+						if(fie.isAnnotationPresent(Convert.class)){
+							Convert annon = fie.getAnnotation(Convert.class);
+							String value = annon.value();
+							Field targetField = target.getClass().getDeclaredField(value);
+
+							//给字段重新赋值
+							targetField.set(target, fie.get(source));
+						}
+					}
+				}
+
 			} catch (Exception e) {
 				log.error("转换参数异常：{}", ExceptionUtils.errorMsg(e));
 			}

@@ -7,9 +7,10 @@ import java.lang.annotation.*;
  * @author mazh
  * @date 2019年02月28日 11:07 
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 public @interface Convert {
+    String value() default "";
 }

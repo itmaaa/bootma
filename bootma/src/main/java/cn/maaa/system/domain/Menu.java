@@ -1,12 +1,18 @@
 package cn.maaa.system.domain;
 
+import cn.maaa.common.annotation.Convert;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Value;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 
 @Data
@@ -16,18 +22,13 @@ public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//
 	private Long id;
-
-	public Menu setId(Long id){
-		this.id = id;
-        return this;
-	}
-
 	public Long getId(){
 		return this.id;
 	}
 	// 父菜单ID，一级菜单为0
 	private Long parentId;
 	// 菜单名称
+	@Convert("text")
 	private String name;
 	// 菜单URL
 	private String url;
