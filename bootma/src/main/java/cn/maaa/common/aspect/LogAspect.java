@@ -7,7 +7,6 @@ import cn.maaa.system.domain.User;
 import cn.maaa.system.service.LogService;
 import com.xiaoleilu.hutool.date.BetweenFormater;
 import com.xiaoleilu.hutool.date.DateUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,7 +21,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -82,8 +80,7 @@ public class LogAspect {
 		Object[] args = joinPoint.getArgs();
 		if(args.length != 0 ){
 			try {
-				//String params = JsonUtils.beanToJson(args[0]);
-				String params = Arrays.toString(args);
+				String params = JsonUtils.beanToJson(args);
 				log.setParams(params);
 			} catch (Exception e) {
 				logger.error("日志参数设置异常：{}", ExceptionUtils.errorMsg(e));
