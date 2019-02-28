@@ -88,10 +88,9 @@ INSERT INTO `sys_user`  VALUES ('136', 'gdg', '郭德纲', '3bb1bda86bc02bf6478c
 -- 补充日志菜单
 -- 2019/02/26
 -- ----------------------------
-INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('27', '91', '系统日志', 'common/log', 'common:log', '1', 'fa fa-warning', '0', '2017-08-14 22:11:53', NULL);
-INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('91', '0', '系统监控', '', '', '0', 'fa fa-video-camera', '5', NULL, NULL);
--- 2019/02/27
-INSERT INTO `sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`, `gmt_create`, `gmt_modified`) VALUES ('7', '3', '角色管理', 'sys/role', 'sys:role:role', '1', 'fa fa-paw', '1', '2017-08-10 14:13:19', NULL);
+INSERT INTO `sys_menu`  VALUES ('27', '91', '系统日志', 'common/log', 'common:log', '1', 'fa fa-warning', '0', '2017-08-14 22:11:53', NULL);
+INSERT INTO `sys_menu`  VALUES ('91', '0', '系统监控', '', '', '0', 'fa fa-video-camera', '5', NULL, NULL);
+
 -- 新建角色表
 CREATE TABLE `sys_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -101,7 +100,7 @@ CREATE TABLE `sys_role` (
   `user_id_create` bigint(255) DEFAULT NULL COMMENT '创建用户id',
   `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
   `gmt_modified` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`role_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色';
 INSERT INTO `sys_role`  VALUES ('1', '超级用户角色', 'admin', '拥有最高权限', '2', '2017-08-12 00:43:52', '2017-08-12 19:14:59');
 INSERT INTO `sys_role`  VALUES ('59', '普通用户', NULL, '基本用户权限', NULL, NULL, NULL);
