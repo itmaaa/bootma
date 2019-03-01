@@ -90,7 +90,19 @@ INSERT INTO `sys_user`  VALUES ('136', 'gdg', '郭德纲', '3bb1bda86bc02bf6478c
 -- ----------------------------
 INSERT INTO `sys_menu`  VALUES ('27', '91', '系统日志', 'common/log', 'common:log', '1', 'fa fa-warning', '0', '2017-08-14 22:11:53', NULL);
 INSERT INTO `sys_menu`  VALUES ('91', '0', '系统监控', '', '', '0', 'fa fa-video-camera', '5', NULL, NULL);
-
+-- 新建日志表
+CREATE TABLE `sys_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `operation` varchar(50) DEFAULT NULL COMMENT '用户操作',
+  `time` int(11) DEFAULT NULL COMMENT '响应时间',
+  `method` varchar(200) DEFAULT NULL COMMENT '请求方法',
+  `params` varchar(5000) DEFAULT NULL COMMENT '请求参数',
+  `ip` varchar(64) DEFAULT NULL COMMENT 'IP地址',
+  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='系统日志';
 -- 新建角色表
 CREATE TABLE `sys_role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -104,3 +116,23 @@ CREATE TABLE `sys_role` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色';
 INSERT INTO `sys_role`  VALUES ('1', '超级用户角色', 'admin', '拥有最高权限', '2', '2017-08-12 00:43:52', '2017-08-12 19:14:59');
 INSERT INTO `sys_role`  VALUES ('59', '普通用户', NULL, '基本用户权限', NULL, NULL, NULL);
+-- 新建部门表
+CREATE TABLE `sys_dept` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '上级部门ID，一级部门为0',
+  `name` varchar(50) DEFAULT NULL COMMENT '部门名称',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='部门管理';
+
+INSERT INTO `sys_dept`  VALUES ('6', '0', '研发部', '1', '1');
+INSERT INTO `sys_dept`  VALUES ('7', '6', '研發一部', '1', '1');
+INSERT INTO `sys_dept`  VALUES ('8', '6', '研发二部', '2', '1');
+INSERT INTO `sys_dept`  VALUES ('9', '0', '销售部', '2', '1');
+INSERT INTO `sys_dept`  VALUES ('10', '9', '销售一部', '1', '1');
+INSERT INTO `sys_dept`  VALUES ('11', '0', '产品部', '3', '1');
+INSERT INTO `sys_dept`  VALUES ('12', '11', '产品一部', '1', '1');
+INSERT INTO `sys_dept`  VALUES ('13', '0', '测试部', '5', '1');
+INSERT INTO `sys_dept`  VALUES ('14', '13', '测试一部', '1', '1');
+INSERT INTO `sys_dept`  VALUES ('15', '13', '测试二部', '2', '1');
