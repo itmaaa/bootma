@@ -5,17 +5,14 @@ import cn.maaa.common.utils.ExceptionUtils;
 import cn.maaa.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
 /**
- * xxx
+ * bean复制切面
  * @author mazh
  * @date 2019年02月28日 11:08
  */
@@ -27,35 +24,28 @@ public class CovertAspect {
 
 	//@Pointcut("execution(* cn.maaa.common.utils.BeanConvert.execute(..))")
 	//@Pointcut("execution(* cn.maaa.common.utils.BeanConvert.sayHello(..))")
-	//@Pointcut("execution(* cn.maaa.common.utils.BeanConvert.exec(..))")
 	//public void covertPointCut() { }
 
 	//@Around("covertPointCut()")
 	//ProceedingJoinPoint is only supported for around advice
 
 
-	@Before("execution(* cn.maaa.common.utils.BeanConvert.exec(..))")
-	public  void before(JoinPoint joinPoint) throws Throwable{
-		System.out.println("====================进入before=======================");
+	@After("execution(* cn.maaa.common.utils.BeanConvert.*Exec(..))")
+	public  void mapper(JoinPoint joinPoint) throws Throwable{
 		Object[] args = joinPoint.getArgs();
 		if(args.length != 0 ){
 			try {
-				String params = JsonUtils.beanToJson(args);
-				System.out.println(params);
 				Object source = args[0];
 				Object target = args[1];
 				Field[] field = source.getClass().getDeclaredFields();
 				if(field != null){
 					for(Field fie : field){
-						if(!fie.isAccessible()){
-							fie.setAccessible(true);
-						}
-
 						if(fie.isAnnotationPresent(Convert.class)){
+							fie.setAccessible(true);
 							Convert annon = fie.getAnnotation(Convert.class);
 							String value = annon.value();
 							Field targetField = target.getClass().getDeclaredField(value);
-
+                            targetField.setAccessible(true);
 							//给字段重新赋值
 							targetField.set(target, fie.get(source));
 						}

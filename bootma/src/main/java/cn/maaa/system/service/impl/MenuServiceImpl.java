@@ -28,17 +28,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
       //  List<Menu> menus = menuMapper.listMenuByUserId(id);
 		List<Menu> menus = list();
-		Map<String, Object> attributes = new HashMap<>(2);
 		//将菜单对象包装成树节点
 		for (Menu menu : menus) {
-			Tree<Menu> tree = new Tree<Menu>();
-			//BeanConvert.execute(menu,tree );
-			Tree<Menu> exec = (Tree<Menu>) beanConvert.exec(menu, tree);
-			tree.setId(menu.getId().toString());
-			tree.setParentId(menu.getParentId().toString());
-			tree.setText(menu.getName());
-            //attributes可以存放需要的关于树节点的信息
-            attributes.put("url", menu.getUrl());
+			Tree<Menu> tree = (Tree<Menu>) beanConvert.apacheForceExec(menu, new Tree<Menu>());
+			//attributes可以存放需要的关于树节点的信息
+			Map<String, Object> attributes = new HashMap<>(2);
+			attributes.put("url", menu.getUrl());
             attributes.put("icon", menu.getIcon());
             tree.setAttributes(attributes);
             trees.add(tree);

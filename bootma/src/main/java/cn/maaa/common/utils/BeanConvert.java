@@ -1,6 +1,5 @@
 package cn.maaa.common.utils;
 
-import cn.maaa.system.domain.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +32,18 @@ public class BeanConvert {
 		}
 	}
 
-	public  Object exec(Object source, Object target) {
+	/**
+	 *  支持不同名称字段复制映射
+	 */
+	public  Object forceExec(Object source, Object target) {
 		return execute(source,target);
+	}
+
+	/**
+	 * 支持不同类型,名称字段复制映射
+	 */
+	public  Object apacheForceExec(Object source, Object target) {
+		return apacheExecute(source,target);
 	}
 
 	//aop只能拦截非静态方法,同时方法所属的类需交由spring管理

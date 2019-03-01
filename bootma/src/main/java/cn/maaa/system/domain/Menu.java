@@ -28,6 +28,7 @@ public class Menu implements Serializable {
 	// 父菜单ID，一级菜单为0
 	private Long parentId;
 	// 菜单名称
+
 	@Convert("text")
 	private String name;
 	// 菜单URL
