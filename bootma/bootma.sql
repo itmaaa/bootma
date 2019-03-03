@@ -136,3 +136,5 @@ INSERT INTO `sys_dept`  VALUES ('12', '11', '产品一部', '1', '1');
 INSERT INTO `sys_dept`  VALUES ('13', '0', '测试部', '5', '1');
 INSERT INTO `sys_dept`  VALUES ('14', '13', '测试一部', '1', '1');
 INSERT INTO `sys_dept`  VALUES ('15', '13', '测试二部', '2', '1');
+-- 菜单添加部门
+INSERT INTO `sys_menu` VALUES ('73', '3', '部门管理', '/system/sysDept', 'system:sysDept:sysDept', '1', 'fa fa-users', '3', NULL, NULL);

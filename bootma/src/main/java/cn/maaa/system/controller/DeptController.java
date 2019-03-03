@@ -1,5 +1,6 @@
 package cn.maaa.system.controller;
 
+import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.M;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +24,17 @@ import java.util.Map;
  * @date 2019年03月01日 22:45
  */
 @Controller
-@RequestMapping("/system/sysDept")
+@RequestMapping("/sys/dept")
 public class DeptController extends BaseController<Dept> {
     private String prefix = "system/dept";
 
-    @Autowired
     private DeptService deptService;
+
+    @Resource
+    public void setDeptService(DeptService deptService){
+        this.deptService = deptService;
+        super.setService(deptService);
+    }
 
     @GetMapping()
     String dept() {
@@ -40,15 +47,27 @@ public class DeptController extends BaseController<Dept> {
         return super.selectList();
     }
 
-    @GetMapping("/add")
-    String add() {
+    @GetMapping("/add/{pId}")
+    String add(@PathVariable("pId") Long pId, Model model) {
+        model.addAttribute("pId", pId);
+        if (pId == SystemConst.DEPT_ROOT_ID) {
+            model.addAttribute("pName", "总部门");
+        } else {
+            model.addAttribute("pName", deptService.getById(pId).getName());
+        }
         return  prefix + "/add";
     }
 
-    @GetMapping("/edit/{deptId}")
-    String edit(@PathVariable("deptId") Long deptId, Model model) {
-        Dept sysDept = deptService.getById(deptId);
-        model.addAttribute("sysDept", sysDept);
+    @GetMapping("/edit/{id}")
+    String edit(@PathVariable("id") Long id, Model model) {
+        Dept dept = deptService.getById(id);
+        model.addAttribute("dept", dept);
+        if(SystemConst.DEPT_ROOT_ID.equals(dept.getParentId())) {
+            model.addAttribute("parentDeptName", "无");
+        }else {
+            Dept parDept = deptService.getById(dept.getParentId());
+            model.addAttribute("parentDeptName", parDept.getName());
+        }
         return  prefix + "/edit";
     }
 
@@ -67,18 +86,10 @@ public class DeptController extends BaseController<Dept> {
      */
     @PostMapping("/remove")
     @ResponseBody
-    public M remove(Long deptId) {
-        return super.delete(deptId);
+    public M remove(Long id) {
+        return super.delete(id);
     }
 
-    /**
-     * 删除
-     */
-    @PostMapping("/batchRemove")
-    @ResponseBody
-    public M batchRemove(@RequestParam("ids[]") Long[] deptIds) {
-        return super.batchDelete(deptIds);
-    }
 
     @GetMapping("/tree")
     @ResponseBody

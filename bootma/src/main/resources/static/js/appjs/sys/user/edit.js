@@ -1,3 +1,4 @@
+var prefix = "/sys/user"
 // 以下为官方示例
 $().ready(function() {
 	validateRule();
@@ -6,36 +7,14 @@ $().ready(function() {
 
 $.validator.setDefaults({
 	submitHandler : function() {
-		update();
+		save();
 	}
 });
-function update() {
+function save() {
 	$("#roleIds").val(getCheckedRoles());
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/sys/user/save",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			alert("Connection error");
-		},
-		success : function(data) {
-			if (data.code == 200) {
-				debugger;
-				parent.layer.msg(data.msg);
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
-
-			} else {
-				parent.layer.msg(data.msg);
-			}
-
-		}
-	});
-
+    sendAjax();
 }
+
 function getCheckedRoles() {
 	var adIds = "";
 	$("input:checkbox[name=role]:checked").each(function(i) {
