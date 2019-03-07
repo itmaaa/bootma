@@ -3,16 +3,9 @@ package cn.maaa.system.domain;
 import cn.maaa.common.annotation.Convert;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Value;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Date;
 
 @Data

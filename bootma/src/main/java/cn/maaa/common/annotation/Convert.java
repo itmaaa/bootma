@@ -3,7 +3,7 @@ package cn.maaa.common.annotation;
 import java.lang.annotation.*;
 
 /**
- * bean复制时字段名更改映射
+ * bean复制注解
  * @author mazh
  * @date 2019年02月28日 11:07 
  */

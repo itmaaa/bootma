@@ -46,7 +46,7 @@ public class BaseController<T> {
 
 	/**
 	 * 列表分页展示
-	 * @param T t,int offset, int limit
+	 * @param  t,offset, limit
 	 * @return
 	 */
 	protected IPage<T> page(T t,int offset, int limit ) {
@@ -57,7 +57,7 @@ public class BaseController<T> {
 
 	/**
 	 * 列表分页展示
-	 * @param  QueryWrapper<T> wrapper,int offset, int limit
+	 * @param   wrapper,offset, limit
 	 * @return
 	 */
 	protected IPage<T> page(QueryWrapper<T> wrapper,int offset, int limit ) {
@@ -78,16 +78,17 @@ public class BaseController<T> {
 	}
 
 	/**
-	 * 列表数据,带wrapper
+	 * 列表数据
 	 * @return
 	 */
 	protected List<T> selectList(QueryWrapper<T> wrapper){
 		return service.list(wrapper);
 	}
 
+
 	/**
 	 * 新增或修改
-	 * @param T t
+	 * @param  t
 	 * @return
 	 */
 	protected M insertOrUpdate(T t) {
@@ -103,7 +104,7 @@ public class BaseController<T> {
 
 	/**
 	 * 单个删除
-	 * @param Long id
+	 * @param  id
 	 * @return
 	 */
 	protected M delete(Long id) {
@@ -118,7 +119,7 @@ public class BaseController<T> {
 
 	/**
 	 * 批量删除
-	 * @param Long[] ids
+	 * @param  ids
 	 * @return
 	 */
 	protected M batchDelete(@RequestParam("ids[]") Long[] ids) {

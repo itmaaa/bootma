@@ -9,21 +9,21 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-							<input id="roleId" name="roleId" type="hidden"
-								th:value="${role.roleId}"> <input id="menuIds"
-								name="menuIds" type="hidden">
+							<input id="id" name="id" type="hidden"
+								value="${role.id}">
+                            <input id="menuIds" name="menuIds" type="hidden">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">角色名：</label>
 								<div class="col-sm-8">
 									<input id="roleName" name="roleName" class="form-control"
-										type="text" th:value="${role.roleName}">
+										type="text" value="${role.roleName}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">备注：</label>
 								<div class="col-sm-8">
 									<input id="remark" name="remark" class="form-control"
-										type="text" th:value="${role.remark}">
+										type="text" value="${role.remark}">
 								</div>
 							</div>
 							<div class="form-group">
