@@ -1,5 +1,6 @@
 package cn.maaa.common.aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -52,10 +53,35 @@ public class AspectTest {
 		  //point.proceed()不执行,AfterAdv执行，所以beforeAdv得做tryCatch
 	}
 
-	@After("pointCut()")
+	/*@After("pointCut()")
 	public void AfterAdv(){
 		System.out.println("=================后置通知AfterAdv执行================");
 		//throw new RuntimeException("AfterAdv执行异常");
 		//抛出异常，point.proceed()执行完
-	}
+	}*/
+
+
+	/**
+	   * 方法正常结束后执行的代码
+	   * 返回通知是可以访问到方法的返回值的
+	   */
+     @AfterReturning(value="pointCut()", returning="result")
+     public void afterReturning(JoinPoint joinPoint, Object result) {
+		 System.out.println("=================afterReturning执行================");
+		 String methodName = joinPoint.getSignature().getName();
+		 System.out.println("The method " + methodName + " return with " + result);
+	 }
+
+	 /**
+       * 在方法出现异常时会执行的代码
+       * 可以访问到异常对象，可以指定在出现特定异常时在执行通知代码
+       */
+	 @AfterThrowing(value="pointCut()", throwing="ex")
+	 public void afterThrowing(JoinPoint joinPoint, Exception ex) {
+		 System.out.println("=================afterThrowing执行================");
+		 String methodName = joinPoint.getSignature().getName();
+		 System.out.println("The method " + methodName + " occurs exception: " + ex);
+	 }
+
+
 }
