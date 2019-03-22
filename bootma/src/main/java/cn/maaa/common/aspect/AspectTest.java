@@ -31,7 +31,27 @@ public class AspectTest {
 		Object result = point.proceed();
 		after();
 		return result;
+
+		//return exec(point);
 	}
+
+	/**
+	 * 说明，aop不对自身类中的方法做拦截
+	 */
+	//对自身方法拦截测试
+	public Object exec(ProceedingJoinPoint point) throws Throwable{
+		return point.proceed();
+	}
+
+	@Pointcut("execution(* cn.maaa.common.aspect.AspectTest.*exec(..))")
+	public void selfPointCut(){}
+
+	@Before("selfPointCut()")
+	public void selfTest(){
+		System.out.println("=================对自身方法的前置通知=================");
+	}
+
+
 
 	public void before(){
 		System.out.println("===========before 执行=============");
@@ -53,6 +73,19 @@ public class AspectTest {
 		  //point.proceed()不执行,AfterAdv执行，所以beforeAdv得做tryCatch
 	}
 
+	/**
+	 * 说明  可以配置多个同类型通知
+	 */
+	//多前置通知测试
+	@Before("pointCut()")
+	public void beforeAdv2(){
+		System.out.println("=================前置通知beforeAdv2执行================");
+		// throw new RuntimeException("beforeAdv执行异常");
+		//point.proceed()不执行,AfterAdv执行，所以beforeAdv得做tryCatch
+	}
+
+
+
 	/*@After("pointCut()")
 	public void AfterAdv(){
 		System.out.println("=================后置通知AfterAdv执行================");
@@ -65,7 +98,7 @@ public class AspectTest {
 	   * 方法正常结束后执行的代码
 	   * 返回通知是可以访问到方法的返回值的
 	   */
-     @AfterReturning(value="pointCut()", returning="result")
+     //@AfterReturning(value="pointCut()", returning="result")
      public void afterReturning(JoinPoint joinPoint, Object result) {
 		 System.out.println("=================afterReturning执行================");
 		 String methodName = joinPoint.getSignature().getName();
@@ -76,7 +109,7 @@ public class AspectTest {
        * 在方法出现异常时会执行的代码
        * 可以访问到异常对象，可以指定在出现特定异常时在执行通知代码
        */
-	 @AfterThrowing(value="pointCut()", throwing="ex")
+	 //@AfterThrowing(value="pointCut()", throwing="ex")
 	 public void afterThrowing(JoinPoint joinPoint, Exception ex) {
 		 System.out.println("=================afterThrowing执行================");
 		 String methodName = joinPoint.getSignature().getName();
