@@ -16,6 +16,15 @@ public class TestController {
 		public String testFreeMarker(Model model){
 			/** 添加响应数据 */
 			model.addAttribute("tip", "测试数据更新了...");
+
+
+			/*try {
+				int i =1/0;
+			} catch (Exception e) {
+				throw  new RuntimeException("testFreeMarker执行异常...");
+			}*/
+			System.out.println("testFreeMarker执行完");
+
 			/** 返回视图 */
 			return "test";
 		}
