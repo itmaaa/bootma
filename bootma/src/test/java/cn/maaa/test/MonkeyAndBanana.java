@@ -22,6 +22,7 @@ public class MonkeyAndBanana {
         int times = 1;
 
        retry:
+
        for (;;){
            int initNumber = getTheNumberOfRemainingBanana(times++);
 
@@ -44,11 +45,16 @@ public class MonkeyAndBanana {
            break ;
        }
 
-    }
+        /**
+         * 递归写法
+         */
+		/*	int theFirstOnesBananas = getTheFirstOnesBananas(1, 0, 5);
+			log.info("香蕉总数：{}",theFirstOnesBananas);*/
 
-    /**
-     * 获取上一只猴子 扔掉一根香蕉，平分五份带走一份后剩余的香蕉数
-     */
+	}
+
+
+	//获取上一只猴子 扔掉一根香蕉，平分五份带走一份后剩余的香蕉数
    public static int getPreviousMonkeysBananaNumber(int number){
        return number / 4 * 5 + 1;
    }
@@ -57,4 +63,26 @@ public class MonkeyAndBanana {
     public static int getTheNumberOfRemainingBanana(int times){
         return 4 * times;
     }
+
+
+    public static int getTheFirstOnesBananas(int times,int number,int count){
+		int initNumber = 4 * times;
+		if(number == 0){
+			number = initNumber;
+		}
+
+		number = number / 4 * 5 + 1;
+
+		if(count == 1){
+			return number;
+		}
+
+    	if(number % 4 == 0){
+    		return getTheFirstOnesBananas(times,number,--count);
+		}
+
+		return getTheFirstOnesBananas(++times,0,5);
+	}
+
+
 }
