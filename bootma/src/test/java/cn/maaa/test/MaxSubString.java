@@ -9,62 +9,58 @@ package cn.maaa.test;
  * 实现一个函数，求两个字符串中最长子串的长度是多少，
  * 例如“abcaabbccddxxyyzz”和“abcxyyzz”的最长子串的长度是5，实现以下函数原型：
  */
+
 public class MaxSubString {
 
+	static int x=10;
+	static  {x+=5;}
+
+
 	public static void main(String[] args) {
-		System.out.println(maxSubstring("abcaabbccddxxyyzz","abcxyyzz"));
+		//输出x是测试选择题的
+		//System.out.println("x="+x);
+
+		System.out.println("最长子串长度为："+maxSubstring("abcaabbccddxxyyzz","abcxyyzz"));
 	}
+
+	static  {x/=3;}
+
+
+
+	/*  动态规划
+	*      a b c a a b b c c d d x x y y z z
+	*  a   1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0
+	*  b   0 2 0 0 0 2 1 0 0 0 0 0 0 0 0 0 0
+	*  c   0 0 3 0 0 0 0 2 1 0 0 0 0 0 0 0 0
+	*  x   0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0
+	*  y   0 0 0 0 0 0 0 0 0 0 0 0 0 2 1 0 0
+	*  y   0 0 0 0 0 0 0 0 0 0 0 0 0 1 3 0 0
+	*  z   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 1
+	*  z   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5
+	*
+	* */
 
 
 	static  int maxSubstring(String str1,String str2){
-
-		int Str1length = str1.length();
-		int Str2length = str2.length();
-		int large;
-		int small;
-		String largeStr;
-		String smallStr;
-
-		if(Str1length > Str2length){
-			large = Str1length;
-			small = Str2length;
-			largeStr = str1;
-			smallStr = str2;
-		}else{
-			large = Str2length;
-			small = Str1length;
-			largeStr = str2;
-			smallStr = str1;
-		}
-
-		int maxSubLength = 0 ;
-
-
-		int k = 0;
-
-		for (int i=0;i<large;i++){
-
-			char letter1 = largeStr.charAt(i);
-
-			for (int j = k;j<small;j++){
-				char letter2 = smallStr.charAt(j);
-
-				if(letter1 == letter2){
-					k++;
-					break;
-				}else {
-					if(k > maxSubLength)
-						maxSubLength = k;
-					if(k != 0){
-						k = 0;
-						j = 0;
-					}
+		int maxLength = 0;
+		int length1 = str1.length();
+		int length2 = str2.length();
+		int arr[][] = new int[length1][length2];
+		for (int i = 0; i< length1;i++){
+			for (int j = 0; j< length2;j++){
+				if(str1.charAt(i) == str2.charAt(j)){
+					if( i != 0 && j != 0)
+						arr[i][j] = arr[i-1][j-1] + 1;
+					else
+						arr[i][j] = 1;
+					maxLength = arr[i][j] > maxLength ? arr[i][j] : maxLength;
+				}else{
+					arr[i][j] = 0;
 				}
-
 			}
-
 		}
-
-		return maxSubLength;
+		return maxLength;
 	}
+
+
 }
