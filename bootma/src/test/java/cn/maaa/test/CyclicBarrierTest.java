@@ -15,13 +15,39 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class CyclicBarrierTest {
 
-
+	private static ExecutorService executor = Executors.newCachedThreadPool();
 
 	public static void main(String[] args) {
 		//ride();
-		doAsCountDownLatch();
+		//doAsCountDownLatch();
+		doAsSemaphore();
 	}
 
+
+
+
+	public static void  doAsSemaphore(){
+		final CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
+
+		for (int i =1 ;i<=100 ;i++){
+			executor.execute(()->{
+				try {
+					Thread.sleep(5000);
+					log.info("当前线程:{}",Thread.currentThread().getName());
+					cyclicBarrier.await();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+
+		}
+
+	}
+
+
+    /**
+     * 模拟CountDownLatch
+     */
 	public static void doAsCountDownLatch(){
 		final CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
 		ExecutorService executor = Executors.newCachedThreadPool();
@@ -46,6 +72,9 @@ public class CyclicBarrierTest {
 
 	}
 
+	/**
+	 * 多线程相互等待
+	 */
 	private static void ride() {
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(10,()-> log.info("鸣枪开跑！！！" ));
 
