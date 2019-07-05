@@ -15,9 +15,40 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class CyclicBarrierTest {
 
-	private static CyclicBarrier cyclicBarrier = new CyclicBarrier(10,()-> log.info("鸣枪开跑！！！" ));
+
 
 	public static void main(String[] args) {
+		//ride();
+		doAsCountDownLatch();
+	}
+
+	public static void doAsCountDownLatch(){
+		final CyclicBarrier cyclicBarrier = new CyclicBarrier(10);
+		ExecutorService executor = Executors.newCachedThreadPool();
+		for (int i =1 ;i<10 ;i++){
+			executor.execute(()->{
+				try {
+					Thread.sleep(1000);
+					log.info("子线程执行..." );
+					cyclicBarrier.await();
+				} catch (Exception e) {
+					log.warn("BarrierException", e);
+				}
+
+			});
+		}
+		try {
+			cyclicBarrier.await();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		log.info("主线程线程执行..." );
+
+	}
+
+	private static void ride() {
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(10,()-> log.info("鸣枪开跑！！！" ));
+
 		ExecutorService executor = Executors.newCachedThreadPool();
 
 		for (int i =1 ;i<=10;i++){
@@ -41,5 +72,6 @@ public class CyclicBarrierTest {
 
 		executor.shutdown();
 	}
+
 
 }
