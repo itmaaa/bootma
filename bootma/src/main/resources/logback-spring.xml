@@ -2,9 +2,20 @@
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
     <!--输出到控制台-->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+   <!-- <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>-->
+
+    <!-- console appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="cn.maaa.common.logback.PatternLogbackLayout">
+                <!-- [05-24 16:35:43] [DEBUG] [执行完毕SQL:(30ms) select count(t.*) from t(xxx::1=1 )] [PerformanceInterceptor.intercept.76] -->
+                <pattern>[%cyan(%-17track_key)] %d{MM/dd/yyyy HH:mm:ss} %highlight(%-5level) - %msg %magenta([%logger{0}.%M.%L]) \n</pattern>
+            </layout>
+            <charset>utf-8</charset>
         </encoder>
     </appender>
 
