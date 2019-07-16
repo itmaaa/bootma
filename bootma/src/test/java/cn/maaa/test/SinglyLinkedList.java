@@ -97,15 +97,16 @@ public class SinglyLinkedList {
 		}
 	}
 
-}
+	@Data
+	public static class Node {
+		public int data;
+		public Node next;
 
-
-@Data
-class Node {
-	public int data;
-	public Node next;
-
-	public Node(int data) {
-		this.data = data;
+		public Node(int data) {
+			this.data = data;
+		}
 	}
+
 }
+
+

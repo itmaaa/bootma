@@ -1,4 +1,4 @@
-package cn.maaa.system.controller;
+package cn.maaa.ztest.aop;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,5 +49,24 @@ public class TestController {
 			//System.out.println("@value-context-path="+path);
 			return "Hello World";
 		}
+
+
+	@Autowired
+	private TestService testService;
+
+	@ResponseBody
+	@GetMapping("/methodOne")
+	public String methodOne(){
+		testService.methodOne();
+		return "methodOne";
+	}
+
+	@ResponseBody
+	@GetMapping("/methodTwo")
+	public String methodTwo(){
+		testService.methodTwo();
+		return "methodTwo";
+	}
+
 
 }

@@ -1,4 +1,4 @@
-package cn.maaa.common.aspect;
+package cn.maaa.ztest.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,7 +20,7 @@ public class AspectTest {
 	 * 前置通知如果异常会影响point.proceed()执行，所以得做tryCatch处理
 	 */
 
-	@Pointcut("execution(* cn.maaa.system.controller.TestController.*testFreeMarker(..))")
+	@Pointcut("execution(* cn.maaa.ztest.aop.TestController.*testFreeMarker(..))")
 	public void pointCut(){}
 
 	//@Around("pointCut()")
@@ -43,7 +43,7 @@ public class AspectTest {
 		return point.proceed();
 	}
 
-	@Pointcut("execution(* cn.maaa.common.aspect.AspectTest.*exec(..))")
+	@Pointcut("execution(* cn.maaa.ztest.aop.AspectTest.*exec(..))")
 	public void selfPointCut(){}
 
 	@Before("selfPointCut()")
