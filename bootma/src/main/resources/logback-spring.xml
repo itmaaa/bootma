@@ -2,7 +2,7 @@
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
     <!--输出到控制台-->
-   <!-- <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+ <!--   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
@@ -35,12 +35,12 @@
     </appender>-->
 
     <logger name="cn.maaa" additivity="false">
-        <appender-ref ref="console"/>
+        <appender-ref ref="STDOUT"/>
        <!-- <appender-ref ref="logFile" />-->
     </logger>
 
     <root level="error">
-        <appender-ref ref="console"/>
+        <appender-ref ref="STDOUT"/>
        <!-- <appender-ref ref="logFile" />-->
     </root>
 
