@@ -56,7 +56,9 @@ public class RoleController extends BaseController<Role> {
 	@PostMapping("/save")
 	@ResponseBody()
 	M save(Role role) {
-		return super.insertOrUpdate(role);
+		//return super.insertOrUpdate(role);
+		 roleService.save(role);
+		return M.ok();
 	}
 
 	@OperLog("删除角色")

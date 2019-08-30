@@ -1,4 +1,7 @@
 var prefix = "/sys/menu"
+
+//模块名称
+var module = "菜单"
 $(document).ready(function () {
     load();
 });
@@ -6,8 +9,8 @@ var load = function () {
     $('#exampleTable')
         .bootstrapTreeTable(
             {
-                id: 'menuId',
-                code: 'menuId',
+                id: 'id',
+                code: 'id',
                 parentCode: 'parentId',
                 type: "GET", // 请求数据的ajax类型
                 url: prefix + '/list', // 请求数据的ajax的url
@@ -20,7 +23,7 @@ var load = function () {
                 columns: [
                     {
                         title: '编号',
-                        field: 'menuId',
+                        field: 'id',
                         visible: false,
                         align: 'center',
                         valign: 'center',
@@ -84,17 +87,17 @@ var load = function () {
                             var e = '<a class="btn btn-primary btn-sm '
                                 + s_edit_h
                                 + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + item.menuId
+                                + item.id
                                 + '\')"><i class="fa fa-edit"></i></a> ';
                             var p = '<a class="btn btn-primary btn-sm '
                                 + s_add_h
                                 + '" href="#" mce_href="#" title="添加下级" onclick="add(\''
-                                + item.menuId
+                                + item.id
                                 + '\')"><i class="fa fa-plus"></i></a> ';
                             var d = '<a class="btn btn-warning btn-sm '
                                 + s_remove_h
                                 + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + item.menuId
+                                + item.id
                                 + '\')"><i class="fa fa-remove"></i></a> ';
                             return e + d + p;
                         }
@@ -106,51 +109,3 @@ function reLoad() {
     load();
 }
 
-function add(pId) {
-    layer.open({
-        type: 2,
-        title: '增加菜单',
-        maxmin: true,
-        shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/add/' + pId // iframe的url
-    });
-}
-
-function remove(id) {
-    layer.confirm('确定要删除选中的记录？', {
-        btn: ['确定', '取消']
-    }, function () {
-        $.ajax({
-            url: prefix + "/remove",
-            type: "post",
-            data: {
-                'id': id
-            },
-            success: function (data) {
-                if (data.code == 0) {
-                    layer.msg("删除成功");
-                    reLoad();
-                } else {
-                    layer.msg(data.msg);
-                }
-            }
-        });
-    })
-}
-
-function edit(id) {
-    layer.open({
-        type: 2,
-        title: '菜单修改',
-        maxmin: true,
-        shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/edit/' + id // iframe的url
-    });
-}
-
-function batchRemove() {
-    // var rows = $('#exampleTable').bootstrapTable('getSelections');
-
-}

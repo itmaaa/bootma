@@ -2,7 +2,7 @@
 <html>
 
 <meta charset="utf-8">
-<head th:include="include :: header"></head>
+<#include '../../header.ftl'/>
 
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</div>
-	<div th:include="include :: footer"></div>
+	<#include '../../footer.ftl'/>
 
 
 	<script type="text/javascript">
@@ -31,7 +31,7 @@
 		function getTreeData() {
 			$.ajax({
 				type : "GET",
-				url : "/system/sysDept/tree",
+				url : "/sys/dept/tree",
 				success : function(tree) {
 					loadTree(tree);
 				}
@@ -47,6 +47,7 @@
 			$('#deptTree').jstree().open_all();
 		}
 		$('#deptTree').on("changed.jstree", function(e, data) {
+		    debugger;
 			if(data.node.id!=-1){
 				parent.loadDept(data.node.id,data.node.text);
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引

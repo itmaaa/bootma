@@ -60,10 +60,12 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">角色</label>
 								<div class="col-sm-8">
-								<#--	<label th:each="role:${roles}" class="checkbox-inline">
-										<input name="role" type="checkbox" th:value="${role.roleId}"
-										th:text="${role.roleName}">
-									</label>-->
+									<#list roles as role>
+										<label class="checkbox-inline">
+											<input name="role" type="checkbox" value="${role.id}"
+													 <#if  role.roleSign = "true" > checked </#if>  > ${role.roleName}</input>
+										</label>
+									</#list>
 								</div>
 							</div>
 							<div class="form-group">

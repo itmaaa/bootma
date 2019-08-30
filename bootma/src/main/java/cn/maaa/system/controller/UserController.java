@@ -4,15 +4,22 @@ import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.MD5Utils;
+import cn.maaa.system.domain.Dept;
+import cn.maaa.system.domain.Role;
 import cn.maaa.system.domain.User;
+import cn.maaa.system.service.DeptService;
+import cn.maaa.system.service.RoleService;
 import cn.maaa.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RequestMapping("/sys/user")
 @Controller
@@ -21,6 +28,12 @@ public class UserController extends BaseController<User> {
 	private String prefix="system/user" ;
 
 	UserService userService;
+
+	@Autowired
+	private DeptService deptService;
+
+	@Autowired
+	private RoleService roleService;
 
 	/**
 	 * 传递给basecontroller指定Iservice的实际类型
@@ -44,9 +57,25 @@ public class UserController extends BaseController<User> {
 		return super.page(user,offset ,limit );
 	}
 
+    /**
+     * @Description:
+     *  动态数据源测试
+     */
+	@OperLog("访问bootdo用户列表")
+	@GetMapping("/bootdoList")
+	@ResponseBody
+	//@DS("bootdo")
+	public IPage<User> bootdoList(User user,int offset, int limit ) {
+		QueryWrapper<User> wrapper = new QueryWrapper<User>().select("username","name");
+		return super.page(wrapper,offset ,limit );
+	}
+
     @OperLog("添加用户")
 	@GetMapping(value = {"/add"})
 	String add(Model model) {
+
+		List<Role> roles = roleService.list();
+		model.addAttribute("roles", roles);
 		return prefix+"/add";
 	}
 
@@ -54,7 +83,14 @@ public class UserController extends BaseController<User> {
 	@GetMapping(value = {"/edit/{id}"})
 	String edit(Model model, @PathVariable(value = "id",required = false) Long id) {
 		User user = userService.getById(id);
+		Dept dept = deptService.getById(user.getDeptId());
+		if (dept != null) {
+			user.setDeptName(dept.getName());
+		}
 		model.addAttribute("user", user);
+
+		List<Role> roles = roleService.list(id);
+		model.addAttribute("roles", roles);
 		return prefix+"/edit";
 	}
 
@@ -63,7 +99,10 @@ public class UserController extends BaseController<User> {
 	@ResponseBody
 	M save(User user) {
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-		return super.insertOrUpdate(user);
+		if (userService.save(user)) {
+			return M.ok();
+		}
+		return M.error();
 	}
 
 	@OperLog("删除用户")

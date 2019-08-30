@@ -5,7 +5,7 @@ var module = "用户"
 
 $(function() {
 	var deptId = '';
-	//getTreeData();
+	getTreeData();
 	load(deptId);
 });
 
@@ -13,7 +13,7 @@ $(function() {
 function getTreeData() {
     $.ajax({
         type : "GET",
-        url : "/system/sysDept/tree",
+        url : "/sys/dept/tree",
         success : function(tree) {
             loadTree(tree);
         }

@@ -34,7 +34,7 @@ function getAllSelectNodes() {
 	console.log(menuIds); 
 }
 function getMenuTreeData() {
-	var roleId = $('#roleId').val();
+	var roleId = $('#id').val();
 	$.ajax({
 		type : "GET",
 		url : "/sys/menu/tree/" + roleId,

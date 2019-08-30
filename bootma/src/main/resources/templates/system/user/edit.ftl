@@ -25,10 +25,10 @@
 						<div class="form-group">
 								<label class="col-sm-3 control-label">部门：</label>
 								<div class="col-sm-8">
-									<input id="deptId" name="deptId" class="hidden" >
+									<input id="deptId" name="deptId" class="hidden" value="${(user.deptId)!}" >
 									 <input id="deptName" name="deptName"
 										class="form-control" type="text" style="cursor: pointer;"
-										onclick="openDept()" readonly="readonly" placeholder="所属部门" >
+										onclick="openDept()" readonly="readonly" value="${(user.deptName)!}" placeholder="所属部门" >
 								</div>
 							</div>
 						<div class="form-group">
@@ -39,24 +39,27 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">状态:</label>
-							<#--<div class="col-sm-8">
+							<div class="col-sm-8">
 								<label class="radio-inline"> <input
-									th:field="*{user.status}" type="radio" name="status" value="1" />
+									<#if  user.status == 1 > checked </#if>  type="radio" name="status" value="1" />
 									正常
 								</label> <label class="radio-inline"> <input
-									th:field="*{user.status}" type="radio" name="status" value="0" />
+									<#if  user.status == 0 > checked </#if> type="radio" name="status" value="0" />
 									禁用
 								</label>
-							</div>-->
+							</div>
 						</div>
 						<input type="hidden" name="roleIds" id="roleIds">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">角色</label>
 							<div class="col-sm-8">
-								<#--<label th:each="role:${roles}" class="checkbox-inline">
-									<input name="role" type="checkbox" th:value="${role.roleId}"
-									th:text="${role.roleName}" th:checked="${role.roleSign}">
-								</label>-->
+									<#list roles as role>
+										<label class="checkbox-inline">
+											<input name="role" type="checkbox" value="${role.id}"
+												 <#if  role.roleSign = "true" > checked </#if>  > ${role.roleName}</input>
+										</label>
+									</#list>
+
 							</div>
 						</div>
 						<div class="form-group">

@@ -7,6 +7,7 @@ import cn.maaa.system.domain.User;
 import cn.maaa.system.service.LogService;
 import com.xiaoleilu.hutool.date.BetweenFormater;
 import com.xiaoleilu.hutool.date.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,7 +32,7 @@ import java.util.concurrent.Executors;
  * @date 2019年02月26日 11:06 
  */
 @Component
-@Aspect
+//@Aspect
 public class LogAspect {
 
 	private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
@@ -81,6 +82,8 @@ public class LogAspect {
 		if(args.length != 0 ){
 			try {
 				String params = JsonUtils.beanToJson(args);
+				if(params.length() > 999)
+					params = StringUtils.left(params,996)+"...";
 				log.setParams(params);
 			} catch (Exception e) {
 				logger.error("日志参数设置异常：{}", ExceptionUtils.errorMsg(e));

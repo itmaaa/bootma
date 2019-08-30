@@ -2,7 +2,7 @@ package cn.maaa.system.shiro;
 
 import cn.maaa.system.domain.User;
 import cn.maaa.system.mapper.UserMapper;
-import com.alibaba.druid.sql.visitor.functions.Char;
+//import com.alibaba.druid.sql.visitor.functions.Char;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

@@ -24,3 +24,8 @@ function validateRule() {
 		}
 	})
 }
+
+function loadDept( deptId,deptName){
+    $("#deptId").val(deptId);
+    $("#deptName").val(deptName);
+}

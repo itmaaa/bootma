@@ -12,16 +12,13 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("sys_menu")
 public class Menu implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5560443196867060661L;
 	//
 	private Long id;
-	public Long getId(){
-		return this.id;
-	}
+
 	// 父菜单ID，一级菜单为0
 	private Long parentId;
 	// 菜单名称
-
 	@Convert("text")
 	private String name;
 	// 菜单URL

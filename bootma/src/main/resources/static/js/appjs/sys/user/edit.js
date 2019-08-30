@@ -2,7 +2,7 @@ var prefix = "/sys/user"
 // 以下为官方示例
 $().ready(function() {
 	validateRule();
-	// $("#signupForm").validate();
+	//$("#signupForm").validate();
 });
 
 $.validator.setDefaults({
@@ -16,19 +16,6 @@ function save() {
 }
 
 function getCheckedRoles() {
-	var adIds = "";
-	$("input:checkbox[name=role]:checked").each(function(i) {
-		if (0 == i) {
-			adIds = $(this).val();
-		} else {
-			adIds += ("," + $(this).val());
-		}
-	});
-	return adIds;
-}
-function setCheckedRoles() {
-	var roleIds = $("#roleIds").val();
-	alert(roleIds);
 	var adIds = "";
 	$("input:checkbox[name=role]:checked").each(function(i) {
 		if (0 == i) {
@@ -95,8 +82,8 @@ var openDept = function(){
 	layer.open({
 		type:2,
 		title:"选择部门",
-		area : [ '300px', '450px' ],
-		content:"/system/sysDept/treeView"
+		area : [ '300px', '400px' ],
+		content:"/sys/dept/treeView"
 	})
 }
 function loadDept( deptId,deptName){

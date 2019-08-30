@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @TableName("sys_user")
@@ -23,8 +25,8 @@ public class User implements Serializable {
     private String password;
     // 部门
     private Long deptId;
-   // private String deptName;
 
+    private transient String deptName;
     // 邮箱
     private String email;
     // 手机号
@@ -38,7 +40,7 @@ public class User implements Serializable {
     // 修改时间
     private Date gmtModified;
     //角色
-    //private List<Long> roleIds;
+    private transient List<Long> roleIds;
     //性别
     private Long sex;
     //出身日期

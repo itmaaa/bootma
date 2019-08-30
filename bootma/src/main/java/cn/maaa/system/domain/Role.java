@@ -36,6 +36,5 @@ public class Role implements Serializable {
 	private Date gmtModified;
 
 	//菜单ids
-	@TableField(select = false)
-	private List<Long> menuIds;
+	private transient List<Long> menuIds;
 }

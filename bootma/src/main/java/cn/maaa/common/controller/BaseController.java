@@ -74,7 +74,7 @@ public class BaseController<T> {
 	 * @return
 	 */
 	protected List<T> selectList(){
-		return this.selectList(null);
+		return service.list();
 	}
 
 	/**
@@ -92,13 +92,13 @@ public class BaseController<T> {
 	 * @return
 	 */
 	protected M insertOrUpdate(T t) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
+		if (SystemConst.DEMO_ACCOUNT.equals(getUsername()))
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 
-		if(service.saveOrUpdate(t)){
+		if(service.saveOrUpdate(t))
 			return M.ok();
-		}
+		//service.update()
+
 		return M.error();
 	}
 
@@ -108,12 +108,12 @@ public class BaseController<T> {
 	 * @return
 	 */
 	protected M delete(Long id) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
+		if (SystemConst.DEMO_ACCOUNT.equals(getUsername()))
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(service.removeById(id)){
+
+		if(service.removeById(id))
 			return M.ok();
-		}
+
 		return M.error();
 	}
 
@@ -123,12 +123,12 @@ public class BaseController<T> {
 	 * @return
 	 */
 	protected M batchDelete(@RequestParam("ids[]") Long[] ids) {
-		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
+		if (SystemConst.DEMO_ACCOUNT.equals(getUsername()))
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
-		if(service.removeByIds(Arrays.asList(ids))){
+
+		if(service.removeByIds(Arrays.asList(ids)))
 			return M.ok();
-		}
+
 		return M.error();
 	}
 

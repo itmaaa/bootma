@@ -88,12 +88,11 @@ function validateRule() {
 }
 
 var openDept = function(){
-	alert("openDept");
 	layer.open({
 		type:2,
 		title:"选择部门",
-		area : [ '300px', '450px' ],
-		content:"/system/sysDept/treeView"
+		area : [ '300px', '400px' ],
+		content:"/sys/dept/treeView"
 	})
 }
 function loadDept( deptId,deptName){
