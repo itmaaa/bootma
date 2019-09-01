@@ -27,38 +27,38 @@
         </div>
         <div class="sidebar-collapse">
             <ul class="nav" id="side-menu">
-                <li class="nav-header">
-                    <div>
-                        <span><img alt="image" class="img-circle" height="60" width="60" src="${picUrl}"/></span>
+                   <li class="nav-header">
+                       <div>
+                           <span><img alt="image" class="img-circle" height="60" width="60" src="${picUrl}"/></span>
+                           <h3 class="" style="color: #ffffff">
+                               </i>BootMa管理系统
+                           </h3>
+                       </div>
+                       <div class="dropdown profile-element hidden">
 
-                        <div class="dropdown profile-element" >
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear">
-                            <span class="block m-t-xs"><strong class="font-bold">${username}<b class="caret"></b></strong></span>
-                                <#--<span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>-->
+                           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                            <span class="block m-t-xs"><strong class="font-bold"
+                                                               text="${username}">admin</strong></span>
+                            <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                              </span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a onclick="personal" href="#">修改头像</a>
-                                </li>
-                                <li><a onclick="personal" href="#">个人资料</a>
-                                </li>
-                                <li><a onclick="personal" href="#">密码修改</a>
-                                </li>
-                                <li><a onclick="personal" href="#">信箱</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="/logout">安全退出</a>
-                                </li>
-                            </ul>
-                            <div class="logo-element">BootDo</div>
-                        </div>
-                        <h3 class="" style="color: #ffffff">
-                            </i>BootMa管理系统
-                        </h3>
-                    </div>
-
-                </li>
+                           </a>
+                           <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                               <li><a onclick="personal" href="#">修改头像</a>
+                               </li>
+                               <li><a onclick="personal" href="#">个人资料</a>
+                               </li>
+                               <li><a onclick="personal" href="#">密码修改</a>
+                               </li>
+                               <li><a onclick="personal" href="#">信箱</a>
+                               </li>
+                               <li class="divider"></li>
+                               <li><a href="/logout">安全退出</a>
+                               </li>
+                           </ul>
+                           <div class="logo-element">BootDo</div>
+                       </div>
+                   </li>
 
                 <li>
                     <a href="#"> <i class="fa fa-home"></i> <span
@@ -140,7 +140,7 @@
                             </li>
                         </ul>
                     </li>-->
-                   <#-- <li class="hidden-xs"><a onclick="personal" href="#" ><i class="fa fa-id-card"></i> 个人</a></li>-->
+                   <li class="hidden-xs"><a onclick="wrapper.personal()" href="#" ><i class="fa fa-id-card"></i> 个人</a></li>
                     <li class="dropdown hidden-xs"><a
                             class="right-sidebar-toggle" aria-expanded="false"> <i
                             class="fa fa-tasks"></i> 主题
@@ -376,6 +376,8 @@
             //this.notify()
         }
     })
+
+
 </script>
 </body>
 </html>

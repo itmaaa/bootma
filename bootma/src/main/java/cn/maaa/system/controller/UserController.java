@@ -8,11 +8,12 @@ import cn.maaa.system.domain.Dept;
 import cn.maaa.system.domain.Role;
 import cn.maaa.system.domain.User;
 import cn.maaa.system.service.DeptService;
+import cn.maaa.system.service.DictService;
 import cn.maaa.system.service.RoleService;
 import cn.maaa.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class UserController extends BaseController<User> {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private DictService dictService;
 
 	/**
 	 * 传递给basecontroller指定Iservice的实际类型
@@ -126,6 +130,23 @@ public class UserController extends BaseController<User> {
 		QueryWrapper<User> wrapper = new QueryWrapper<>();
 		wrapper.eq("username",username);
 		return userService.count(wrapper) < 1;
+	}
+
+	@GetMapping("/personal")
+	String personal(Model model) {
+		User user  = userService.getById(getUserId());
+		model.addAttribute("user",user);
+		model.addAttribute("hobbyList",dictService.getHobbyList(user));
+
+		model.addAttribute("sexList",dictService.getSexList());
+		return prefix + "/personal";
+	}
+
+	@PostMapping("/updatePeronal")
+	@ResponseBody
+	M updatePeronal(User user) {
+		userService.updateById(user);
+		return M.ok();
 	}
 
 }
