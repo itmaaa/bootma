@@ -6,7 +6,9 @@ import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.ShiroUtils;
+import cn.maaa.system.domain.File;
 import cn.maaa.system.domain.Menu;
+import cn.maaa.system.service.FileService;
 import cn.maaa.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,7 +30,8 @@ public class LoginController extends BaseController {
 
     @Autowired
     MenuService menuService;
-
+    @Autowired
+    FileService fileService;
 
     @GetMapping({ "/", "" })
     String welcome(Model model) {
@@ -50,7 +53,8 @@ public class LoginController extends BaseController {
     @ResponseBody
 	M ajaxLogin(String username, String password) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, MD5Utils.encrypt(password));
+        password = MD5Utils.encrypt(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         try {
             //调用login方法会进入realm中执行认证操作
             subject.login(token);
@@ -67,9 +71,16 @@ public class LoginController extends BaseController {
 		HashMap<String, Object> map = new HashMap<>();
 		List<Tree<Menu>> menus = menuService.listMenuTree(getUserId());
         map.put("menus", menus);
-        map.put("picUrl","/img/photo_s.jpg");
         map.put("username", getUser().getUsername());
 		map.put("name", getUser().getName());
+        File file = fileService.getById(getUser().getPicId());
+        if(file!=null&&file.getUrl()!=null){
+            if(fileService.isExist(file.getUrl())){
+                map.put("picUrl",file.getUrl());
+            }
+        }else {
+            map.put("picUrl","/img/photo_s.jpg");
+        }
 
         mav.addAllObjects(map);
         mav.setViewName("index");

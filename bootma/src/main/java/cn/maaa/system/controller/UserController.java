@@ -1,12 +1,14 @@
 package cn.maaa.system.controller;
 
 import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.M;
 import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.system.domain.Dept;
 import cn.maaa.system.domain.Role;
 import cn.maaa.system.domain.User;
+import cn.maaa.system.dto.UserDTO;
 import cn.maaa.system.service.DeptService;
 import cn.maaa.system.service.DictService;
 import cn.maaa.system.service.RoleService;
@@ -14,13 +16,21 @@ import cn.maaa.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
+import lombok.Data;
+import lombok.extern.java.Log;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/sys/user")
 @Controller
@@ -147,6 +157,65 @@ public class UserController extends BaseController<User> {
 	M updatePeronal(User user) {
 		userService.updateById(user);
 		return M.ok();
+	}
+
+	@PostMapping("/resetPwd")
+	@ResponseBody
+	M resetPwd(UserDTO userDTO) {
+		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		try{
+			userService.resetPwd(userDTO,getUser());
+			return M.ok();
+		}catch (Exception e){
+			return M.error(1,e.getMessage());
+		}
+
+	}
+
+	@PostMapping("/adminResetPwd")
+	@ResponseBody
+	M adminResetPwd(UserDTO userDTO) {
+		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		try{
+			userService.adminResetPwd(userDTO);
+			return M.ok();
+		}catch (Exception e){
+			return M.error(1,e.getMessage());
+		}
+
+	}
+
+
+	@GetMapping("/resetPwd/{id}")
+	String resetPwd(@PathVariable("id") Long userId, Model model) {
+
+		User user = new User();
+		user.setId(userId);
+		model.addAttribute("user", user);
+		return prefix + "/reset_pwd";
+	}
+
+	@ResponseBody
+	@PostMapping("/uploadImg")
+	M uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
+		if ("test".equals(getUsername())) {
+			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result = userService.updatePersonalImg(file, avatar_data, getUserId());
+		} catch (Exception e) {
+			return M.error("更新图像失败！");
+		}
+		if(result!=null && result.size()>0){
+			return M.ok(result);
+		}else {
+			return M.error("更新图像失败！");
+		}
 	}
 
 }

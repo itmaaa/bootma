@@ -2,7 +2,7 @@
 <html>
 
 <meta charset="utf-8">
-<head th:include="include :: header"></head>
+<#include "./include.ftl"></head>
 
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
@@ -12,7 +12,7 @@
 
 				<div class="ibox-content">
 					<form class="form-horizontal m-t" id="signupForm">
-						<input id="userId" name="userDO.userId" th:value="${user.userId}"
+						<input id="userId" name="user.id" value="${user.id}"
 							type="hidden">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">输入密码：</label>

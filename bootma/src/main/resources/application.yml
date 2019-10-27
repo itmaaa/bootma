@@ -1,3 +1,5 @@
+bootma:
+  uploadPath: c:/var/uploaded_files/
 server:
   session-timeout: 1800
 #    tomcat:

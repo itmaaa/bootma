@@ -7,4 +7,7 @@ package cn.maaa.common.exception;
  * @date 2019年08月17日 18:54
  */
 public class BizException  extends RuntimeException{
+    public BizException(String message) {
+        super(message);
+    }
 }

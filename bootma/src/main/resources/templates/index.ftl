@@ -29,7 +29,7 @@
             <ul class="nav" id="side-menu">
                    <li class="nav-header">
                        <div>
-                           <span><img alt="image" class="img-circle" height="60" width="60" src="${picUrl}"/></span>
+                           <span><img alt="image" class="img-circle" height="60" width="60" src="${picUrl!}"/></span>
                            <h3 class="" style="color: #ffffff">
                                </i>BootMa管理系统
                            </h3>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
 <meta charset="utf-8">
 
 <#include "./include.ftl"/>
@@ -184,7 +183,7 @@
                     <div class="ibox-content tab-pane fade" id="pwd_info">
                         <form class="gg-form" role="form" id="modifyPwd">
                             <a id="logout" class="hidden" href="/logout"></a>
-                            <input type="hidden" name ="userDO.userId" value="${user.userId!}"/>
+                            <input type="hidden" name ="user.id" value="${user.id!}"/>
                             <div class="gg-formGroup">
                                 <div class="gg-formTitle">
                                     <em class="gg-star">*</em>
@@ -227,7 +226,7 @@
         </div>
     </div>
 </div>
-<#include "./include.ftl"/>
+<#--<#include "./include.ftl"/>-->
 <script type="text/javascript" src="/js/appjs/sys/user/personal.js"></script>
 </body>
 </html>
