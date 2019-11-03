@@ -10,12 +10,12 @@
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
 							<input id="parentId" name="parentId" type="hidden"
-								value="${menu.parentId}">
+								value="${pId}">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">上级菜单：</label>
 								<div class="col-sm-8">
-									<#--<input id="" name="" class="form-control" type="text"
-										value="${pName}" readonly>-->
+									<input id="" name="" class="form-control" type="text"
+										value="${pName}" readonly>
 								</div>
 							</div>
 							<div class="form-group">

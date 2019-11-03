@@ -3,4 +3,13 @@
 
 <mapper namespace="cn.maaa.system.mapper.MenuMapper">
 
+    <select id="selectOnesResource" parameterType="Long" resultType="String"  >
+		select distinct m.perms from sys_menu m
+		   inner join sys_role_menu rm on m.id = rm.menu_id
+           inner join sys_user_role ur on rm.role_id = ur.role_id
+           where ur.user_id = #{id} and m.perms is not null and m.perms <![CDATA[<>]]> ''
+	</select>
+
+
+
 </mapper>

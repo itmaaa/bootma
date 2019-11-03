@@ -20,6 +20,9 @@ $.validator.setDefaults({
 		submit01();
 	}
 });
+
+
+
 function submit01() {
 	$.ajax({
 		cache : true,

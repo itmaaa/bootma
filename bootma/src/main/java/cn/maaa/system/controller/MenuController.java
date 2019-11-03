@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2019年03月01日 11:03 
  */
 @Controller
-@RequestMapping("sys/menu")
+@RequestMapping("/sys/menu")
 public class MenuController extends BaseController<Menu> {
 	
 	String prefix = "system/menu";
@@ -47,7 +47,14 @@ public class MenuController extends BaseController<Menu> {
 
 	@OperLog("添加菜单")
 	@GetMapping("/add/{pId}")
-	String add() {
+	String add(Model model, @PathVariable("pId") Long pId) {
+
+		model.addAttribute("pId", pId);
+		if (pId == 0) {
+			model.addAttribute("pName", "根目录");
+		} else {
+			model.addAttribute("pName", menuService.getById(pId).getName());
+		}
 		return prefix + "/add";
 	}
 

@@ -105,4 +105,9 @@ public class LoginController extends BaseController {
         return "main";
     }
 
+    @GetMapping("/403")
+    String unauthorizedUrl() {
+        return "error/403";
+    }
+
 }

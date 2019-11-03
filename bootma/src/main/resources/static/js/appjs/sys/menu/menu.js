@@ -109,3 +109,6 @@ function reLoad() {
     load();
 }
 
+function add(pid) {
+    openTab('添加'+module,prefix + '/add/'+pid);
+}

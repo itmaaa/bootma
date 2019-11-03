@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @author mazh
  * @date 2019年02月26日 14:33 
  */
-@RequestMapping("common/log")
+@RequestMapping("/common/log")
 @Controller
 public class LogController extends BaseController<Log> {
 
