@@ -1,5 +1,6 @@
 package cn.maaa.system.controller;
 
+import cn.maaa.common.annotation.IsMenu;
 import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
@@ -35,12 +36,14 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping()
+	@IsMenu
 	String menu(Model model) {
 		return prefix+"/menu";
 	}
 
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@ResponseBody
+	@IsMenu
 	List<Menu> list() {
 		return super.selectList();
 	}
