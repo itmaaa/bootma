@@ -1,37 +1,45 @@
 package cn.maaa.common.config;
 
 import cn.maaa.common.annotation.IsMenu;
+import cn.maaa.common.annotation.OperLog;
 import cn.maaa.system.domain.Menu;
+import cn.maaa.system.service.MenuService;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author :  mazh
  * @date :  2019/11/4 14:06
  */
 
+@Component
 public class MenuScanner {
 
-    public static void main(String[] args) {
-        getRequestMappingMethod("cn.maaa.system.controller");
+    @Autowired
+    private MenuService menuService;
 
-    }
 
     /**
      * @param scanPackage 需要扫描的包路径
      */
-    private static void getRequestMappingMethod(String scanPackage) {
+    private  void getRequestMappingMethod(String scanPackage) {
         //设置扫描路径
         Reflections reflections = new Reflections(scanPackage, new TypeAnnotationsScanner(),new SubTypesScanner());
 
@@ -54,12 +62,23 @@ public class MenuScanner {
                 Menu menu = new Menu();
 
                 menu.setUrl(url).setType(getType(method)).setPerms(getPerms(url));
+                if(getName(method) != null)
+                    menu.setName(getName(method));
                 list.add(menu);
             }
         }
 
-        //TODO 输出到控制台,此处存数据库即可
-        System.out.println(JSON.toJSONString(list));
+        List<String> oldUrls = menuService.list().stream().map(Menu::getUrl).collect(Collectors.toList());
+        List<String> newUrls = list.stream().map(Menu::getUrl).collect(Collectors.toList());
+        for (String oldUrl : oldUrls) {
+            for (String newUrl : newUrls) {
+                if(!oldUrls.contains(newUrl))
+                    menuService.save(list.stream().filter(m -> newUrl.equals(m.getUrl())).findFirst().get());
+                if(!newUrls.contains(oldUrl))
+                    menuService.remove(new UpdateWrapper<Menu>().set("url",oldUrl ));
+            }
+        }
+
     }
 
 
@@ -97,6 +116,12 @@ public class MenuScanner {
         if(path.length == 0)
             return null;
         return String.join(":", path).substring(1);
+    }
+
+    private static String getName(Method method){
+        if(method.isAnnotationPresent(OperLog.class))
+            return  method.getAnnotation(OperLog.class).value();
+        return null;
     }
 
 
