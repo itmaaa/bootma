@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@RequestMapping("/sys/role")
+@RequestMapping("sys/role")
 @Controller
+@OperLog("角色管理")
 public class RoleController extends BaseController<Role> {
 	String prefix = "system/role";
 
@@ -26,11 +27,12 @@ public class RoleController extends BaseController<Role> {
 	}
 
 	@GetMapping()
+	@OperLog("角色页面")
 	String role() {
 		return prefix + "/role";
 	}
 
-	@OperLog("访问角色列表")
+	@OperLog("角色列表")
 	@GetMapping("/list")
 	@ResponseBody()
 	public List<Role> list() {

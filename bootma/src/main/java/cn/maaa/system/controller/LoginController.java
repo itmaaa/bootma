@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
+@OperLog(value = "登录管理",exclusive = true)
 public class LoginController extends BaseController {
 
     @Autowired
@@ -34,11 +35,12 @@ public class LoginController extends BaseController {
     FileService fileService;
 
     @GetMapping({ "/", "" })
+    @OperLog("welcome")
     String welcome(Model model) {
         return "redirect:/index";
     }
 
-    @OperLog("访问登录页面")
+    @OperLog("登录页面")
     @GetMapping("/login")
     String login() {
         //已登录再访问/login直接进入index
@@ -64,7 +66,7 @@ public class LoginController extends BaseController {
         }
     }
 
-    @OperLog("访问首页")
+    @OperLog("首页")
     @GetMapping({ "/index" })
 	ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
@@ -93,6 +95,7 @@ public class LoginController extends BaseController {
     * */
 
     @GetMapping("/logout")
+    @OperLog("退出登录")
     String logout() {
         System.out.println("退出登录...");
         ShiroUtils.logout();

@@ -19,6 +19,7 @@ import javax.annotation.Resource;
  */
 @RequestMapping("common/log")
 @Controller
+@OperLog("日志管理")
 public class LogController extends BaseController<Log> {
 
 	LogService logService;
@@ -32,6 +33,7 @@ public class LogController extends BaseController<Log> {
 	String prefix = "common/log";
 
 	@GetMapping()
+	@OperLog("日志页面")
 	String log() {
 		return prefix + "/log";
 	}
@@ -39,6 +41,7 @@ public class LogController extends BaseController<Log> {
 
 	@GetMapping("/list")
 	@ResponseBody
+	@OperLog("日志列表")
 	public IPage<Log> list(Log log,int offset, int limit ) {
 		QueryWrapper<Log> wrapper = new QueryWrapper<>(log)
 				.orderByDesc("gmt_create");

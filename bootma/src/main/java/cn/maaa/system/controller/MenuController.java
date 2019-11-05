@@ -1,14 +1,11 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.IsMenu;
 import cn.maaa.common.annotation.OperLog;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.M;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.service.MenuService;
-import cn.maaa.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("sys/menu")
+@OperLog("菜单管理")
 public class MenuController extends BaseController<Menu> {
 	
 	String prefix = "system/menu";
@@ -36,14 +34,14 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping()
-	@IsMenu
+	@OperLog("菜单页面")
 	String menu(Model model) {
 		return prefix+"/menu";
 	}
 
 	@GetMapping("/list")
 	@ResponseBody
-	@IsMenu
+	@OperLog("菜单列表")
 	List<Menu> list() {
 		return super.selectList();
 	}
@@ -84,6 +82,7 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping("/tree")
+	@OperLog("全菜单树")
 	@ResponseBody
 	Tree<Menu> tree() {
 		Tree<Menu>  tree = menuService.getTree();
@@ -92,6 +91,7 @@ public class MenuController extends BaseController<Menu> {
 
 	@GetMapping("/tree/{roleId}")
 	@ResponseBody
+	@OperLog("角色菜单树")
 	Tree<Menu> tree(@PathVariable("roleId") Long roleId) {
 		Tree<Menu> tree = menuService.getTree(roleId);
 		return tree;
