@@ -1,10 +1,10 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
-import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.common.utils.M;
+import cn.maaa.common.utils.MD5Utils;
 import cn.maaa.common.utils.ShiroUtils;
 import cn.maaa.system.domain.File;
 import cn.maaa.system.domain.Menu;
@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
-@OperLog(value = "登录管理",exclusive = true)
+@Route(value = "登录管理",exclusive = true)
 public class LoginController extends BaseController {
 
     @Autowired
@@ -35,12 +35,12 @@ public class LoginController extends BaseController {
     FileService fileService;
 
     @GetMapping({ "/", "" })
-    @OperLog("welcome")
+    @Route("welcome")
     String welcome(Model model) {
         return "redirect:/index";
     }
 
-    @OperLog("登录页面")
+    @Route("登录页面")
     @GetMapping("/login")
     String login() {
         //已登录再访问/login直接进入index
@@ -50,7 +50,7 @@ public class LoginController extends BaseController {
         return "login";
     }
 
-    @OperLog("用户登录")
+    @Route("用户登录")
     @PostMapping("/login")
     @ResponseBody
 	M ajaxLogin(String username, String password) {
@@ -66,7 +66,7 @@ public class LoginController extends BaseController {
         }
     }
 
-    @OperLog("首页")
+    @Route("首页")
     @GetMapping({ "/index" })
 	ModelAndView index() {
 		ModelAndView mav = new ModelAndView();
@@ -95,14 +95,14 @@ public class LoginController extends BaseController {
     * */
 
     @GetMapping("/logout")
-    @OperLog("退出登录")
+    @Route("退出登录")
     String logout() {
         System.out.println("退出登录...");
         ShiroUtils.logout();
         return "redirect:/login";
     }
 
-    @OperLog("主页前言")
+    @Route("主页前言")
     @GetMapping("/main")
     String main() {
         return "main";

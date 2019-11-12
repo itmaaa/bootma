@@ -1,6 +1,6 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.M;
@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RequestMapping("sys/user")
 @Controller
-@OperLog("用户管理")
+@Route("用户管理")
 public class UserController extends BaseController<User> {
 	
 	private String prefix="system/user" ;
@@ -56,12 +56,12 @@ public class UserController extends BaseController<User> {
 
 
 	@GetMapping("")
-	@OperLog("用户页面")
+	@Route("用户页面")
 	String user(Model model) {
 		return prefix + "/user";
 	}
 
-	@OperLog("用户列表")
+	@Route("用户列表")
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
@@ -72,7 +72,7 @@ public class UserController extends BaseController<User> {
      * @Description:
      *  动态数据源测试
      */
-	@OperLog("bootdo用户列表")
+	@Route("bootdo用户列表")
 	@GetMapping("/bootdoList")
 	@ResponseBody
 	//@DS("bootdo")
@@ -81,7 +81,7 @@ public class UserController extends BaseController<User> {
 		return super.page(wrapper,offset ,limit );
 	}
 
-    @OperLog("添加用户")
+    @Route("添加用户")
 	@GetMapping(value = {"/add"})
 	String add(Model model) {
 
@@ -90,7 +90,7 @@ public class UserController extends BaseController<User> {
 		return prefix+"/add";
 	}
 
-	@OperLog("编辑用户")
+	@Route("编辑用户")
 	@GetMapping(value = {"/edit/{id}"})
 	String edit(Model model, @PathVariable(value = "id",required = false) Long id) {
 		User user = userService.getById(id);
@@ -105,7 +105,7 @@ public class UserController extends BaseController<User> {
 		return prefix+"/edit";
 	}
 
-	@OperLog("保存用户")
+	@Route("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
 	M save(User user) {
@@ -116,14 +116,14 @@ public class UserController extends BaseController<User> {
 		return M.error();
 	}
 
-	@OperLog("删除用户")
+	@Route("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
 	M remove(Long id) {
 		return super.delete(id);
 	}
 
-	@OperLog("批量删除用户")
+	@Route("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	M batchRemove(@RequestParam("ids[]") Long[] ids) {
@@ -132,7 +132,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/exist")
 	@ResponseBody
-	@OperLog(exclusive = true,record = false)
+	@Route(exclusive = true,record = false)
 	boolean exist(String username) {
 		// 存在，不通过，false
 		QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -141,7 +141,7 @@ public class UserController extends BaseController<User> {
 	}
 
 	@GetMapping("/personal")
-	@OperLog("个人信息页面")
+	@Route("个人信息页面")
 	String personal(Model model) {
 		User user  = userService.getById(getUserId());
 		model.addAttribute("user",user);
@@ -153,7 +153,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/updatePeronal")
 	@ResponseBody
-	@OperLog("更新个人信息")
+	@Route("更新个人信息")
 	M updatePeronal(User user) {
 		userService.updateById(user);
 		return M.ok();
@@ -161,7 +161,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/resetPwd")
 	@ResponseBody
-	@OperLog("重置密码")
+	@Route("重置密码")
 	M resetPwd(UserDTO userDTO) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -177,7 +177,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/adminResetPwd")
 	@ResponseBody
-	@OperLog("管理员重置密码")
+	@Route("管理员重置密码")
 	M adminResetPwd(UserDTO userDTO) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -193,7 +193,7 @@ public class UserController extends BaseController<User> {
 
 
 	@GetMapping("/resetPwd/{id}")
-	@OperLog("重置密码页面")
+	@Route("重置密码页面")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
 
 		User user = new User();
@@ -204,7 +204,7 @@ public class UserController extends BaseController<User> {
 
 	@ResponseBody
 	@PostMapping("/uploadImg")
-	@OperLog("上传图片")
+	@Route("上传图片")
 	M uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
 		if ("test".equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");

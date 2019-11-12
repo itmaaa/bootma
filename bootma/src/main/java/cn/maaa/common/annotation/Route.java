@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 import java.lang.annotation.*;
 
 /**
- * 日志注解
+ * 菜单日志注解
  * @author mazh
  * @date 2019年02月26日 11:03 
  */
@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface OperLog {
+public @interface Route {
        String value() default "";
        //是否排除菜单
        boolean exclusive() default false;

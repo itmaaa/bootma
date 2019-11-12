@@ -1,6 +1,6 @@
 package cn.maaa.common.aspect;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.utils.*;
 import cn.maaa.system.domain.Log;
 import cn.maaa.system.domain.User;
@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
  * @date 2019年02月26日 11:06 
  */
 @Component
-//@Aspect
+@Aspect
 public class LogAspect {
 
 	private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
@@ -42,7 +42,7 @@ public class LogAspect {
 
 	private ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-	@Pointcut("@annotation(cn.maaa.common.annotation.OperLog)")
+	@Pointcut("@annotation(cn.maaa.common.annotation.Route)")
 	public void logPointCut() { }
 
 	@Around("logPointCut()")
@@ -68,10 +68,10 @@ public class LogAspect {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 		Log log = new Log();
-		OperLog operLog = method.getAnnotation(OperLog.class);
-		if (operLog != null) {
+		Route route = method.getAnnotation(Route.class);
+		if (route != null) {
 			// 注解上的描述
-			log.setOperation(operLog.value());
+			log.setOperation(route.value());
 		}
 		// 请求的方法名
 		String className = joinPoint.getTarget().getClass().getName();

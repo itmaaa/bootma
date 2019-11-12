@@ -1,6 +1,6 @@
 package cn.maaa.common.config;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -64,8 +64,8 @@ public class MenuScanner implements ApplicationRunner {
         Method[] methods;
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Controller.class);
         for (Class<?> clazz : classes) {
-            OperLog operLog = clazz.getAnnotation(OperLog.class);
-            if(operLog != null && operLog.exclusive())
+            Route route = clazz.getAnnotation(Route.class);
+            if(route != null && route.exclusive())
                 continue;
 
             RequestMapping annotation = clazz.getAnnotation(RequestMapping.class);
@@ -80,14 +80,14 @@ public class MenuScanner implements ApplicationRunner {
                 System.out.println();
                 parent = oldMenus.stream().filter(one -> finalUrl_prefix.equals(one.getUrl())).findAny().get();
             }else {
-                parent.setUrl(url_prefix).setType(1).setPerms(getPerms(url_prefix)).setName(getName(clazz)).setParentId(0L).setGmtCreate(now).setGmtModified(now);
+                parent.setUrl(url_prefix).setType(1).setPerms(getPerms(url_prefix)).setName(getName(clazz)).setParentId(1L).setGmtCreate(now).setGmtModified(now);
                 menuService.save(parent);
             }
             newUrls.add(url_prefix);
 
             methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
-                OperLog oper = method.getAnnotation(OperLog.class);
+                Route oper = method.getAnnotation(Route.class);
                 if(oper != null && oper.exclusive())
                     continue;
                 String url =  getUrl(method);
@@ -182,8 +182,8 @@ public class MenuScanner implements ApplicationRunner {
     }
 
     private static String getName(AnnotatedElement element){
-        if(element.isAnnotationPresent(OperLog.class))
-            return  element.getAnnotation(OperLog.class).value();
+        if(element.isAnnotationPresent(Route.class))
+            return  element.getAnnotation(Route.class).value();
         return null;
     }
 
