@@ -1,6 +1,6 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.constants.SystemConst;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.M;
@@ -14,12 +14,7 @@ import cn.maaa.system.service.DictService;
 import cn.maaa.system.service.RoleService;
 import cn.maaa.system.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.api.R;
-import lombok.Data;
-import lombok.extern.java.Log;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/sys/user")
+@RequestMapping("sys/user")
 @Controller
+@Route("用户管理")
 public class UserController extends BaseController<User> {
 	
 	private String prefix="system/user" ;
@@ -60,11 +56,12 @@ public class UserController extends BaseController<User> {
 
 
 	@GetMapping("")
+	@Route("用户页面")
 	String user(Model model) {
 		return prefix + "/user";
 	}
 
-	@OperLog("访问用户列表")
+	@Route("用户列表")
 	@GetMapping("/list")
 	@ResponseBody
 	public IPage<User> list(User user,int offset, int limit ) {
@@ -75,7 +72,7 @@ public class UserController extends BaseController<User> {
      * @Description:
      *  动态数据源测试
      */
-	@OperLog("访问bootdo用户列表")
+	@Route("bootdo用户列表")
 	@GetMapping("/bootdoList")
 	@ResponseBody
 	//@DS("bootdo")
@@ -84,7 +81,7 @@ public class UserController extends BaseController<User> {
 		return super.page(wrapper,offset ,limit );
 	}
 
-    @OperLog("添加用户")
+    @Route("添加用户")
 	@GetMapping(value = {"/add"})
 	String add(Model model) {
 
@@ -93,7 +90,7 @@ public class UserController extends BaseController<User> {
 		return prefix+"/add";
 	}
 
-	@OperLog("编辑用户")
+	@Route("编辑用户")
 	@GetMapping(value = {"/edit/{id}"})
 	String edit(Model model, @PathVariable(value = "id",required = false) Long id) {
 		User user = userService.getById(id);
@@ -108,7 +105,7 @@ public class UserController extends BaseController<User> {
 		return prefix+"/edit";
 	}
 
-	@OperLog("保存用户")
+	@Route("保存用户")
 	@PostMapping("/save")
 	@ResponseBody
 	M save(User user) {
@@ -119,14 +116,14 @@ public class UserController extends BaseController<User> {
 		return M.error();
 	}
 
-	@OperLog("删除用户")
+	@Route("删除用户")
 	@PostMapping("/remove")
 	@ResponseBody
 	M remove(Long id) {
 		return super.delete(id);
 	}
 
-	@OperLog("批量删除用户")
+	@Route("批量删除用户")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	M batchRemove(@RequestParam("ids[]") Long[] ids) {
@@ -135,6 +132,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/exist")
 	@ResponseBody
+	@Route(exclusive = true,record = false)
 	boolean exist(String username) {
 		// 存在，不通过，false
 		QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -143,6 +141,7 @@ public class UserController extends BaseController<User> {
 	}
 
 	@GetMapping("/personal")
+	@Route("个人信息页面")
 	String personal(Model model) {
 		User user  = userService.getById(getUserId());
 		model.addAttribute("user",user);
@@ -154,6 +153,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/updatePeronal")
 	@ResponseBody
+	@Route("更新个人信息")
 	M updatePeronal(User user) {
 		userService.updateById(user);
 		return M.ok();
@@ -161,6 +161,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/resetPwd")
 	@ResponseBody
+	@Route("重置密码")
 	M resetPwd(UserDTO userDTO) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -176,6 +177,7 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/adminResetPwd")
 	@ResponseBody
+	@Route("管理员重置密码")
 	M adminResetPwd(UserDTO userDTO) {
 		if (SystemConst.DEMO_ACCOUNT.equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");
@@ -191,6 +193,7 @@ public class UserController extends BaseController<User> {
 
 
 	@GetMapping("/resetPwd/{id}")
+	@Route("重置密码页面")
 	String resetPwd(@PathVariable("id") Long userId, Model model) {
 
 		User user = new User();
@@ -201,6 +204,7 @@ public class UserController extends BaseController<User> {
 
 	@ResponseBody
 	@PostMapping("/uploadImg")
+	@Route("上传图片")
 	M uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
 		if ("test".equals(getUsername())) {
 			return M.error(1, "演示系统不允许修改,完整体验请部署程序");

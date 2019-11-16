@@ -1,6 +1,6 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.utils.M;
 import cn.maaa.system.domain.Log;
@@ -19,6 +19,7 @@ import javax.annotation.Resource;
  */
 @RequestMapping("/common/log")
 @Controller
+@Route("日志管理")
 public class LogController extends BaseController<Log> {
 
 	LogService logService;
@@ -32,6 +33,7 @@ public class LogController extends BaseController<Log> {
 	String prefix = "common/log";
 
 	@GetMapping()
+	@Route("日志页面")
 	String log() {
 		return prefix + "/log";
 	}
@@ -39,20 +41,21 @@ public class LogController extends BaseController<Log> {
 
 	@GetMapping("/list")
 	@ResponseBody
+	@Route("日志列表")
 	public IPage<Log> list(Log log,int offset, int limit ) {
 		QueryWrapper<Log> wrapper = new QueryWrapper<>(log)
 				.orderByDesc("gmt_create");
 		return super.page(wrapper,offset,limit );
 	}
 
-	@OperLog("删除日志")
+	@Route("删除日志")
 	@PostMapping("/remove")
 	@ResponseBody
 	M remove(Long id) {
 		return super.delete(id);
 	}
 
-	@OperLog("批量删除日志")
+	@Route("批量删除日志")
 	@PostMapping("/batchRemove")
 	@ResponseBody
 	M batchRemove(@RequestParam("ids[]") Long[] ids) {

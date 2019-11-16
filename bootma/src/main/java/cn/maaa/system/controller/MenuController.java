@@ -1,13 +1,11 @@
 package cn.maaa.system.controller;
 
-import cn.maaa.common.annotation.OperLog;
+import cn.maaa.common.annotation.Route;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.M;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.service.MenuService;
-import cn.maaa.system.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,8 @@ import java.util.List;
  * @date 2019年03月01日 11:03 
  */
 @Controller
-@RequestMapping("/sys/menu")
+@RequestMapping("sys/menu")
+@Route("菜单管理")
 public class MenuController extends BaseController<Menu> {
 	
 	String prefix = "system/menu";
@@ -35,17 +34,19 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping()
+	@Route("菜单页面")
 	String menu(Model model) {
 		return prefix+"/menu";
 	}
 
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@ResponseBody
+	@Route("菜单列表")
 	List<Menu> list() {
 		return super.selectList();
 	}
 
-	@OperLog("添加菜单")
+	@Route("添加菜单")
 	@GetMapping("/add/{pId}")
 	String add(Model model, @PathVariable("pId") Long pId) {
 
@@ -58,7 +59,7 @@ public class MenuController extends BaseController<Menu> {
 		return prefix + "/add";
 	}
 
-	@OperLog("编辑菜单")
+	@Route("编辑菜单")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
 		Menu menu = menuService.getById(id);
@@ -73,14 +74,14 @@ public class MenuController extends BaseController<Menu> {
 		return prefix+"/edit";
 	}
 
-	@OperLog("保存菜单")
+	@Route("保存菜单")
 	@PostMapping("/save")
 	@ResponseBody
 	M save(Menu menu) {
 		return super.insertOrUpdate(menu);
 	}
 
-	@OperLog("删除菜单")
+	@Route("删除菜单")
 	@PostMapping("/remove")
 	@ResponseBody
 	M remove(Long id) {
@@ -88,6 +89,7 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping("/tree")
+	@Route("全菜单树")
 	@ResponseBody
 	Tree<Menu> tree() {
 		Tree<Menu>  tree = menuService.getTree();
@@ -96,6 +98,7 @@ public class MenuController extends BaseController<Menu> {
 
 	@GetMapping("/tree/{roleId}")
 	@ResponseBody
+	@Route("角色菜单树")
 	Tree<Menu> tree(@PathVariable("roleId") Long roleId) {
 		Tree<Menu> tree = menuService.getTree(roleId);
 		return tree;
