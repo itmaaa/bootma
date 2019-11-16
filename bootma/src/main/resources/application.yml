@@ -61,7 +61,7 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/bootma?useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://127.0.0.1:3307/bootma?useUnicode=true&characterEncoding=utf8
         #bootdo:
          # username: root
          # password: root
