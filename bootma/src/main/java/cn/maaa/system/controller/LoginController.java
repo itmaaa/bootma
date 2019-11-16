@@ -13,6 +13,7 @@ import cn.maaa.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -106,7 +108,12 @@ public class LoginController extends BaseController {
     }
 
     @GetMapping("/403")
-    String unauthorizedUrl() {
+    String unauthorizedUrl( HttpServletRequest request) {
+        //ajax请求
+        String requestType = request.getHeader("X-Requested-With");
+        if("XMLHttpRequest".equals(requestType)){
+            throw new AuthorizationException();
+        }
         return "error/403";
     }
 
