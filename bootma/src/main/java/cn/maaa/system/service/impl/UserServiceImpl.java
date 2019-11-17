@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     @Transactional
     @Override
-    public boolean save(User user) {
+    public boolean saveUser(User user) {
         saveOrUpdate(user);
         Long userId = user.getId();
         List<Long> roleIds = user.getRoleIds();

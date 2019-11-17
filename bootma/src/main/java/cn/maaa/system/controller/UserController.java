@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("sys/user")
+@RequestMapping("/sys/user")
 @Controller
 @Route("用户管理")
 public class UserController extends BaseController<User> {
@@ -61,9 +61,9 @@ public class UserController extends BaseController<User> {
 		return prefix + "/user";
 	}
 
-	@Route("用户列表")
 	@GetMapping("/list")
 	@ResponseBody
+	@Route("用户列表")
 	public IPage<User> list(User user,int offset, int limit ) {
 		return super.page(user,offset ,limit );
 	}
@@ -110,7 +110,7 @@ public class UserController extends BaseController<User> {
 	@ResponseBody
 	M save(User user) {
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
-		if (userService.save(user)) {
+		if (userService.saveUser(user)) {
 			return M.ok();
 		}
 		return M.error();
@@ -132,7 +132,6 @@ public class UserController extends BaseController<User> {
 
 	@PostMapping("/exist")
 	@ResponseBody
-	@Route(exclusive = true,record = false)
 	boolean exist(String username) {
 		// 存在，不通过，false
 		QueryWrapper<User> wrapper = new QueryWrapper<>();

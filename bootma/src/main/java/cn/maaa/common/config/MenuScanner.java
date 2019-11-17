@@ -2,6 +2,8 @@ package cn.maaa.common.config;
 
 import cn.maaa.common.annotation.Route;
 import cn.maaa.system.domain.Menu;
+import cn.maaa.system.domain.RoleMenu;
+import cn.maaa.system.mapper.RoleMenuMapper;
 import cn.maaa.system.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -26,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *  菜单扫描器
@@ -35,21 +38,18 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class MenuScanner implements ApplicationRunner {
-
-    @Override
-    public void run(ApplicationArguments applicationArguments) throws Exception {
-        initMenu("cn.maaa.system.controller");
-    }
-
+public class MenuScanner  {
 
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
+
     /**
      * @param scanPackage 需要扫描的包路径
      */
-    private  void initMenu(String scanPackage) {
+    public   void initMenu(String scanPackage) {
         log.info("============================  initMenu start ==============================" );
         //设置扫描路径
         Reflections reflections = new Reflections(scanPackage, new TypeAnnotationsScanner(),new SubTypesScanner());
@@ -65,7 +65,7 @@ public class MenuScanner implements ApplicationRunner {
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Controller.class);
         for (Class<?> clazz : classes) {
             Route route = clazz.getAnnotation(Route.class);
-            if(route != null && route.exclusive())
+            if(route == null || route.exclusive())
                 continue;
 
             RequestMapping annotation = clazz.getAnnotation(RequestMapping.class);
@@ -80,15 +80,17 @@ public class MenuScanner implements ApplicationRunner {
                 System.out.println();
                 parent = oldMenus.stream().filter(one -> finalUrl_prefix.equals(one.getUrl())).findAny().get();
             }else {
-                parent.setUrl(url_prefix).setType(1).setPerms(getPerms(url_prefix)).setName(getName(clazz)).setParentId(1L).setGmtCreate(now).setGmtModified(now);
+                parent.setUrl(url_prefix).setType(1).setPerms(getPerms(url_prefix)).setName(getName(clazz)).setParentId(0L).setGmtCreate(now).setGmtModified(now);
                 menuService.save(parent);
+                //超级管理员增加所有菜单权限
+                roleMenuMapper.insert(new RoleMenu().setRoleId(1L).setMenuId(parent.getId()));
             }
             newUrls.add(url_prefix);
 
             methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
                 Route oper = method.getAnnotation(Route.class);
-                if(oper != null && oper.exclusive())
+                if(oper == null || oper.exclusive())
                     continue;
                 String url =  getUrl(method);
                 if(StringUtils.isEmpty(url)) {
@@ -123,15 +125,27 @@ public class MenuScanner implements ApplicationRunner {
             log.info("============ remove menus =============" );
             QueryWrapper<Menu> wrapper = new QueryWrapper<>();
             wrapper.in("url",oldUrls );
-            menuService.remove(wrapper);
+           // menuService.remove(wrapper);
+            List<Long> menuIds = menuService.list(wrapper).stream().map(Menu::getId).collect(Collectors.toList());
+            menuService.removeByIds(menuIds);
+            QueryWrapper<RoleMenu> roleMenuQueryWrapper = new QueryWrapper<>();
+            roleMenuQueryWrapper.in("menu_id",menuIds );
+            roleMenuMapper.delete(roleMenuQueryWrapper);
         }
+
 
         //添加新菜单
         newUrls.removeAll(temp2);
         List<Menu> ml = list.stream().filter(m -> newUrls.contains(m.getUrl())).collect(Collectors.toList());
         if(!ml.isEmpty()){
             log.info("============ add menus =============" );
-            menuService.saveBatch(ml);
+          //  menuService.saveBatch(ml);
+            for (Menu menu : ml) {
+                menuService.save(menu);
+                //超级管理员增加所有菜单权限
+                roleMenuMapper.insert(new RoleMenu().setRoleId(1L).setMenuId(menu.getId()));
+            }
+
         }
 
         //更新菜单名
@@ -145,6 +159,7 @@ public class MenuScanner implements ApplicationRunner {
                 menuService.update(updateWrapper);
             });
         }
+
     }
 
 

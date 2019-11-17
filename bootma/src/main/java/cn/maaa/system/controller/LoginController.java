@@ -99,7 +99,6 @@ public class LoginController extends BaseController {
     @GetMapping("/logout")
     @Route("退出登录")
     String logout() {
-        System.out.println("退出登录...");
         ShiroUtils.logout();
         return "redirect:/login";
     }

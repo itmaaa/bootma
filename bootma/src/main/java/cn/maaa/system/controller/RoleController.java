@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@RequestMapping("sys/role")
+@RequestMapping("/sys/role")
 @Controller
 @Route("角色管理")
 public class RoleController extends BaseController<Role> {
@@ -32,9 +32,9 @@ public class RoleController extends BaseController<Role> {
 		return prefix + "/role";
 	}
 
-	@Route("角色列表")
 	@GetMapping("/list")
 	@ResponseBody()
+	@Route("角色列表")
 	public List<Role> list() {
 		//因为role的记录不多，设置了在前端分页，所以后台直接返回list即可
 		return super.selectList();
@@ -59,7 +59,7 @@ public class RoleController extends BaseController<Role> {
 	@ResponseBody()
 	M save(Role role) {
 		//return super.insertOrUpdate(role);
-		 roleService.save(role);
+		 roleService.saveRole(role);
 		return M.ok();
 	}
 

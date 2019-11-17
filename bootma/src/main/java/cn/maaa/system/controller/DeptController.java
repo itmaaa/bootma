@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2019年03月01日 22:45
  */
 @Controller
-@RequestMapping("sys/dept")
+@RequestMapping("/sys/dept")
 @Route("部门管理")
 public class DeptController extends BaseController<Dept> {
     private String prefix = "system/dept";
@@ -47,7 +47,7 @@ public class DeptController extends BaseController<Dept> {
     }
 
     @GetMapping("/add/{pId}")
-    @Route("添加部门")
+    @Route(value = "添加部门")
     String add(@PathVariable("pId") Long pId, Model model) {
         model.addAttribute("pId", pId);
         if (pId == SystemConst.DEPT_ROOT_ID) {
@@ -96,13 +96,12 @@ public class DeptController extends BaseController<Dept> {
 
     @GetMapping("/tree")
     @ResponseBody
-    @Route("部门树")
     public Tree<Dept> tree() {
         return deptService.getTree();
     }
 
     @GetMapping("/treeView")
-    @Route("部门树页面")
+    @Route("部门树")
     String treeView() {
         return  prefix + "/deptTree";
     }

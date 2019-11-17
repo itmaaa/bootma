@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2019年03月01日 11:03 
  */
 @Controller
-@RequestMapping("sys/menu")
+@RequestMapping("/sys/menu")
 @Route("菜单管理")
 public class MenuController extends BaseController<Menu> {
 	
@@ -89,7 +89,6 @@ public class MenuController extends BaseController<Menu> {
 	}
 
 	@GetMapping("/tree")
-	@Route("全菜单树")
 	@ResponseBody
 	Tree<Menu> tree() {
 		Tree<Menu>  tree = menuService.getTree();
@@ -98,7 +97,6 @@ public class MenuController extends BaseController<Menu> {
 
 	@GetMapping("/tree/{roleId}")
 	@ResponseBody
-	@Route("角色菜单树")
 	Tree<Menu> tree(@PathVariable("roleId") Long roleId) {
 		Tree<Menu> tree = menuService.getTree(roleId);
 		return tree;

@@ -13,4 +13,6 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<Role> list(Long id);
+
+    boolean saveRole(Role role);
 }

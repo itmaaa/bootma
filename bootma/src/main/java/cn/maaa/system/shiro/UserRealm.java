@@ -11,11 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,5 +64,23 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(dbUser, password, getName());
         return info;
 
+    }
+
+    //重写shiro的字符串权限匹配规则-equals
+    @Override
+    protected boolean isPermitted(Permission permission, AuthorizationInfo info) {
+        Collection<Permission> perms = this.getPermissions(info);
+        if (perms != null && !perms.isEmpty()) {
+            Iterator var4 = perms.iterator();
+
+            while(var4.hasNext()) {
+                Permission perm = (Permission)var4.next();
+                if (perm.equals(permission)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

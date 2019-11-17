@@ -1,5 +1,6 @@
 package cn.maaa.system.shiro;
 
+import cn.maaa.common.config.MenuScanner;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.mapper.MenuMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -30,7 +31,12 @@ public class MenuPermissionService  {
     @Autowired
     private MenuMapper menuMapper;
 
+    @Autowired
+    private MenuScanner menuScanner;
+
     public Map<String, String>  findMenuPermission() {
+        //先初始化菜单
+        menuScanner.initMenu("cn.maaa.system.controller");
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.select("url","perms")
                          .isNotNull("url")

@@ -60,7 +60,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Transactional
     @Override
-    public boolean save(Role role) {
+    public boolean saveRole(Role role) {
         boolean b = saveOrUpdate(role);
         List<Long> menuIds = role.getMenuIds();
         Long roleId = role.getId();

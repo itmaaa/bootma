@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 public interface UserService extends IService<User> {
-    boolean save(User user);
+    boolean saveUser(User user);
 
     void resetPwd(UserDTO userDTO, User user);
 
