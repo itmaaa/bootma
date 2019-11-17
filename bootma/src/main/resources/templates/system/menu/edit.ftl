@@ -72,14 +72,14 @@
 								<label class="col-sm-3 control-label">排序号：</label>
 								<div class="col-sm-8">
 									<input id="orderNum" name="orderNum" class="form-control"
-										type="text" value="${menu.orderNum}">
+										type="text" value="${menu.orderNum!}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">图标：</label>
 								<div class="col-sm-5">
 									<input id="icon" name="icon" class="form-control" type="text"
-										placeholder="例如：fa fa-circle-o" value="${menu.icon}">
+										placeholder="例如：fa fa-circle-o" value="${menu.icon!}">
 								</div>
 								<input id="ico-btn" class="btn btn-warning" type="button" value="选择图标">
 							</div>
