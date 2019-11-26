@@ -3,6 +3,7 @@ package cn.maaa.ztest.redission;
 import cn.maaa.system.domain.User;
 import cn.maaa.system.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBucket;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class RedissionServiceImpl implements RedissionService {
 
 	@Override
 	public void saveUser() {
+		RBucket<Object> bucket = redissonClient.getBucket(key);
+		Object o = bucket.get();
+		System.out.println("oldObject: "+ o);
+		bucket.set("maaa");
+		Object n  = bucket.get();
+		System.out.println("newObject: " + n);
+
 		RLock lock = redissonClient.getLock(key);
 		try {
 			lock.lock( );

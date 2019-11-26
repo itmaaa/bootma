@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author :  mazh
  * @date :  2019/11/12 18:12
  */
+/*
 @Configuration
 public class RedissonConfig {
 
@@ -31,4 +32,4 @@ public class RedissonConfig {
     }
 
 
-}
+}*/
