@@ -124,7 +124,7 @@ public class LockAspect {
                         res = lock.tryLock(waitTime, leaseTime, TimeUnit.MILLISECONDS);
                     }
                     if (res) {
-                        log.debug("加锁成功,锁模式->{},锁失效释放时间->{}秒", lockMode.name(), leaseTime == -1L?leaseTime:leaseTime/1000);
+                        log.debug("加锁成功,锁模式->{},锁过期时间->{}秒", lockMode.name(), leaseTime == -1L?leaseTime:leaseTime/1000);
                         Object obj = proceedingJoinPoint.proceed();
                         return obj;
                     }
@@ -134,7 +134,7 @@ public class LockAspect {
                     }
                 }
             }
-            log.debug("加锁失败,锁模式->{},等待加锁时间->{}秒,锁失效释放时间->{}秒", lockMode.name(), waitTime/1000,leaseTime == -1L?leaseTime:leaseTime/1000);
+            log.debug("加锁失败,锁模式->{},等待加锁时间->{}秒,锁过期时间->{}秒", lockMode.name(), waitTime/1000,leaseTime == -1L?leaseTime:leaseTime/1000);
             return null;
     }
 

@@ -59,4 +59,21 @@ public class RedissionServiceImpl implements RedissionService {
 		Integer total = userMapper.selectCount(null);
 		log.info("total user number is {}", total);
 	}
+
+	int tickets = 100;
+	@RedissonLock(keys = "tickets",waitTime = 10000L)
+    @Override
+	public void getTickets(){
+        if(tickets == 50){
+            System.out.println(Thread.currentThread().getName()+"-> 阻塞");
+            try {
+                Thread.sleep(20000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        tickets --;
+        System.out.println(Thread.currentThread().getName()+" -> 获取到票,剩余票数:"+tickets);
+
+    }
 }

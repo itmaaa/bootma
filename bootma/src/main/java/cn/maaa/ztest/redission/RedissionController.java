@@ -55,8 +55,9 @@ public class RedissionController {
 
 		//若测试不加锁情况 去除方法上@RedissonLock注解
         //testService.saveUser();
-        User user = new User().setId(100L);
-        testService.saveUser(user);
+       // User user = new User().setId(100L);
+        //testService.saveUser(user);
+        testService.getTickets();
         return M.ok();
     }
 }
