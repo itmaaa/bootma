@@ -1,5 +1,7 @@
 package cn.maaa.ztest.redission;
 
+import cn.maaa.system.domain.User;
+
 /**
  * xxx 
  * @author mazh
@@ -9,4 +11,5 @@ public interface RedissionService {
 
 	void saveUser();
 
+	void saveUser(User user);
 }

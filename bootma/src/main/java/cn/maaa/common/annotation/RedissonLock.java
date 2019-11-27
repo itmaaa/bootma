@@ -24,12 +24,18 @@ public @interface RedissonLock {
     String[] keys() default {};
 
     /**
-     * 锁超时释放时间,默认30000毫秒
+     * 锁存放的目录
      */
-    long leaseTime() default 30000L;
+    String catalog() default "";
 
     /**
-     * 等待加锁超时时间,默认10000毫秒 -1 则表示一直等待
+     * 锁超时释放时间,默认-1L，加锁默认30s,每隔10s自动续期
+     */
+    long leaseTime() default -1L;
+
+    /**
+     * 等待加锁超时时间
+     * 默认-1L 则表示使用lock 一直等待加锁,有值使用tryLock尝试加锁，超过时间放弃
      */
     long waitTime() default -1L;
 

@@ -46,12 +46,13 @@ spring:
 
   servlet:
     multipart:
-      max-file-size: 30Mb
-      max-request-size: 30Mb
+      max-file-size: 100MB
+      max-request-size: 100MB
   cache:
     type: ehcache
     ehcache:
       config: classpath:config/ehcache.xml
+
 
   datasource:
     dynamic:
@@ -61,7 +62,7 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3307/bootma?useUnicode=true&characterEncoding=utf8
+          url: jdbc:mysql://127.0.0.1:3306/bootma?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
         #bootdo:
          # username: root
          # password: root
