@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 public @interface RedissonLock {
 
     /**
-     * 锁的模式:如果不设置,自动模式,当参数只有一个.使用 REDLOCK 参数多个 MULTIPLE
+     * 锁的模式:默认自动模式,当参数只有一个 -> REDLOCK, 参数多个 -> MULTIPLE
      */
     LockMode lockMode() default LockMode.AUTO;
 
@@ -24,7 +24,7 @@ public @interface RedissonLock {
     String[] keys() default {};
 
     /**
-     * 锁存放的目录
+     * 锁存放的目录,默认   rLock:方法名:key
      */
     String catalog() default "";
 

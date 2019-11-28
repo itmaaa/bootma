@@ -14,4 +14,6 @@ public interface RedissionService {
 	void saveUser(User user);
 
 	void getTickets();
+
+	void test();
 }

@@ -1,6 +1,7 @@
 package cn.maaa.ztest.redission;
 
 import cn.maaa.common.annotation.RedissonLock;
+import cn.maaa.common.utils.SpringContextHolder;
 import cn.maaa.system.domain.User;
 import cn.maaa.system.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -61,19 +62,33 @@ public class RedissionServiceImpl implements RedissionService {
 	}
 
 	int tickets = 100;
-	@RedissonLock(keys = "tickets",waitTime = 10000L)
+
+	@RedissonLock(keys = "tickets",waitTime = 5000L,leaseTime = 2000L)
     @Override
 	public void getTickets(){
-        if(tickets == 50){
+		if(tickets == 0){
+			System.out.println("抢票结束");
+			return;
+		}
+		tickets --;
+		System.out.println(Thread.currentThread().getName()+" -> 获取到票,剩余票数:"+tickets);
+		int num = number.getAndIncrement();
+		//升级到3.11.5解决java.io.IOException: 远程主机强迫关闭了一个现有的连接
+        if(num == 50){
             System.out.println(Thread.currentThread().getName()+"-> 阻塞");
             try {
                 Thread.sleep(20000L);
+				System.out.println("休眠结束");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
-        tickets --;
-        System.out.println(Thread.currentThread().getName()+" -> 获取到票,剩余票数:"+tickets);
 
     }
+
+	@Override
+	public void test() {
+		RedissionServiceImpl bean = SpringContextHolder.getBean(RedissionServiceImpl.class);
+		bean.getTickets();
+	}
 }

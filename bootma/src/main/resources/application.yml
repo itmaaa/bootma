@@ -24,7 +24,7 @@ mybatis-plus:
       #是否开启 LIKE 查询，即根据 entity 自动生成的 where 条件中 String 类型字段 是否使用 LIKE，默认不开启
       column-like: true
       #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-      id-type: 0
+      id-type: AUTO
       #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
       field-strategy: not_null
       #驼峰下划线转换
@@ -73,4 +73,3 @@ spring:
     host: 127.0.0.1
  #  password:
     database: 1
-    timeout: 2000

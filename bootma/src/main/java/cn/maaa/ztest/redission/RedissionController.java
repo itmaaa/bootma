@@ -5,6 +5,7 @@ import cn.maaa.system.domain.User;
 import org.redisson.api.RBucket;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class RedissionController {
 
     @Autowired
     private RedissonClient redissonClient;
+
+
 
     /** 查询 */
     @GetMapping("/test/redisson")
@@ -55,9 +58,17 @@ public class RedissionController {
 
 		//若测试不加锁情况 去除方法上@RedissonLock注解
         //testService.saveUser();
+
+
+        //测试spel表达式取值
        // User user = new User().setId(100L);
         //testService.saveUser(user);
-        testService.getTickets();
+
+        //测试tryLock
+       // testService.getTickets();
+
+        //测试同类中调用aop切入的方法,没有实现代理切入
+        testService.test();
         return M.ok();
     }
 }
