@@ -19,9 +19,7 @@ import org.redisson.RedissonRedLock;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -73,11 +71,9 @@ public class LockAspect {
         Method method = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod();
         String[] parameterNames = new LocalVariableTableParameterNameDiscoverer().getParameterNames(method);
         Object[] args = proceedingJoinPoint.getArgs();
-
-        String catalog = redissonLock.catalog();
         //默认方法名做二级目录
-        if(StringUtils.isEmpty(catalog))
-            catalog =  method.getName();
+        String catalog = redissonLock.catalog().isEmpty() ? method.getName() :redissonLock.catalog() ;
+
         switch (lockMode) {
                 case FAIR:
                     lock = redissonClient.getFairLock(parseKey(catalog,keys[0], parameterNames, args));
@@ -99,12 +95,12 @@ public class LockAspect {
                     lock = redissonClient.getLock(parseKey(catalog,keys[0], parameterNames, args));
                     break;
                 case READ:
-                    RReadWriteLock rwlock = redissonClient.getReadWriteLock(parseKey(catalog,keys[0], parameterNames, args));
-                    lock = rwlock.readLock();
+                    RReadWriteLock rlock = redissonClient.getReadWriteLock(parseKey(catalog,keys[0], parameterNames, args));
+                    lock = rlock.readLock();
                     break;
                 case WRITE:
-                    RReadWriteLock rwlock1 = redissonClient.getReadWriteLock(parseKey(catalog,keys[0], parameterNames, args));
-                    lock = rwlock1.writeLock();
+                    RReadWriteLock wlock = redissonClient.getReadWriteLock(parseKey(catalog,keys[0], parameterNames, args));
+                    lock = wlock.writeLock();
                     break;
                 default:
                     break;
@@ -141,7 +137,7 @@ public class LockAspect {
 
     /**
      * 通过spring Spel 获取参数
-     * @param catalog        key存放目录
+     * @param catalog        key 存放目录
      * @param key            定义的key值 以#开头 例如:#user
      * @param parameterNames 形参
      * @param values         形参值

@@ -1,18 +1,12 @@
 package cn.maaa.ztest.redission;
 
 import cn.maaa.common.utils.M;
-import cn.maaa.system.domain.User;
-import org.redisson.api.RBucket;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author :  mazh
