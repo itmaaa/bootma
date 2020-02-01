@@ -36,7 +36,7 @@ public class MenuPermissionService  {
 
     public Map<String, String>  findMenuPermission() {
         //先初始化菜单
-     //   menuScanner.initMenu("cn.maaa.system.controller");
+        menuScanner.initMenu("cn.maaa.system.controller");
         QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
         menuQueryWrapper.select("url","perms")
                          .isNotNull("url")

@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthorizationException.class)
     public M authorizationExceptionHandler(AuthorizationException authorizationException){
-        return M.error(403, "没有访问权限");
+        return M.error(403, "没有操作权限");
     }
 
 }
