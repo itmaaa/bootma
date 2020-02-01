@@ -24,9 +24,6 @@ function save() {
 }
 
 function sendAjax(){
-    debugger;
-    alert($('#signupForm').serialize());
-    alert($('#id').val());
     $.ajax({
         cache : true,
         type : "POST",
