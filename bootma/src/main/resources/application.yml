@@ -41,8 +41,13 @@ mybatis-plus:
     cache-enabled: false
 spring:
 # 指定其他配置文件位置
-  profiles:
-    active: config/freemarker
+ # profiles:
+  #  active: config/freemarker
+  freemarker:
+    suffix: .ftl  #后缀名
+    cache: true #缓存配置
+    template-loader-path: classpath:/templates/ #模板加载路径 按需配置
+    charset: UTF-8 #编码格式
 
   servlet:
     multipart:
@@ -62,7 +67,7 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/bootma?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
+          url: jdbc:mysql://127.0.0.1:3307/bootma?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
         #bootdo:
          # username: root
          # password: root
