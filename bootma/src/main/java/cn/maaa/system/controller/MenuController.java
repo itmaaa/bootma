@@ -78,6 +78,8 @@ public class MenuController extends BaseController<Menu> {
 	@PostMapping("/save")
 	@ResponseBody
 	M save(Menu menu) {
+		if("2".equals(menu.getType()))
+			return M.error("按钮下级不能添加菜单");
 		return super.insertOrUpdate(menu);
 	}
 
