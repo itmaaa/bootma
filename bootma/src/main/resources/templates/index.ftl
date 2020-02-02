@@ -73,7 +73,7 @@
               <#if menus?? && menus?size gt 0>
                 <#list menus as menu>
                     <li>
-                         <a href="#"> <i class="${menu.attributes.icon}"></i>
+                         <a href="#"> <i class="${menu.attributes.icon!}"></i>
                              <span class="nav-label">${menu.text}</span> <span class="fa arrow"></span>
                          </a>
                          <ul class="nav nav-second-level">

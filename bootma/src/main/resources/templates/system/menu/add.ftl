@@ -24,7 +24,7 @@
 									<label class="radio-inline"> <input type="radio"
 										name="type" value="0" /> 目录
 									</label> <label class="radio-inline"> <input type="radio"
-										name="type" value="1" /> 菜单
+										name="type" value="1" checked /> 菜单
 									</label> <label class="radio-inline"> <input type="radio"
 										name="type" value="2" /> 按钮
 									</label>
