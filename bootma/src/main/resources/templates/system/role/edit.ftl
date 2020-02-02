@@ -19,6 +19,13 @@
 										type="text" value="${role.roleName}">
 								</div>
 							</div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">标识：</label>
+                                <div class="col-sm-8">
+                                    <input id="roleSign" name="roleSign" class="form-control"
+                                           type="text"  value="${role.roleSign}">
+                                </div>
+                            </div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">备注：</label>
 								<div class="col-sm-8">
@@ -26,6 +33,7 @@
 										type="text" value="${role.remark}">
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-3 control-label">菜单权限：</label>
 								<div class="col-sm-8">

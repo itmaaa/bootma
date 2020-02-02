@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Transactional
 @Service
@@ -38,7 +37,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public List<Tree<Menu>> listMenuTree(Long id) {
         List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
       //  List<Menu> menus = menuMapper.listMenuByUserId(id);
-		List<Menu> menus = list();
+        QueryWrapper<Menu> wrapper = new QueryWrapper<Menu>().orderByAsc("order_num");
+        List<Menu> menus = list(wrapper);
 		//将菜单对象包装成树节点
 		for (Menu menu : menus) {
 			Tree<Menu> tree = (Tree<Menu>) beanConvert.apacheForceExec(menu, new Tree<Menu>());
@@ -69,7 +69,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
         }
         List<Tree<Menu>> trees = new ArrayList<Tree<Menu>>();
-        List<Menu> menuDOs = list();
+        QueryWrapper<Menu> orderWrapper = new QueryWrapper<Menu>().orderByAsc("order_num");
+        List<Menu> menuDOs = list(orderWrapper);
 
         for (Menu sysMenu : menuDOs) {
             Tree<Menu> tree = new Tree<Menu>();

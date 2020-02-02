@@ -29,14 +29,14 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">排序：</label>
 								<div class="col-sm-8">
-									<input id="orderNum" name="orderNum" value="${dept.orderNum}"
+									<input id="orderNum" name="orderNum" value="${dept.orderNum!}"
 										class="form-control" type="text">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">状态：</label>
 								<div class="col-sm-8">
-									<input id="delFlag" name="delFlag" value="${dept.delFlag}"
+									<input id="delFlag" name="delFlag" value="${dept.delFlag!}"
 										class="form-control" type="text">
 								</div>
 							</div>

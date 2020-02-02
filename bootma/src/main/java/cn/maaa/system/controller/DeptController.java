@@ -7,6 +7,7 @@ import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.M;
 import cn.maaa.system.domain.Dept;
 import cn.maaa.system.service.DeptService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class DeptController extends BaseController<Dept> {
     @GetMapping("/list")
     @Route("部门列表")
     public List<Dept> list() {
-        return super.selectList();
+        QueryWrapper<Dept> wrapper = new QueryWrapper<Dept>().orderByAsc("order_num");
+        return super.selectList(wrapper);
     }
 
     @GetMapping("/add/{pId}")
@@ -90,7 +92,9 @@ public class DeptController extends BaseController<Dept> {
     @ResponseBody
     @Route("删除部门")
     public M remove(Long id) {
-        return super.delete(id);
+        //return super.delete(id);
+        deptService.delete(id);
+        return M.ok();
     }
 
 
