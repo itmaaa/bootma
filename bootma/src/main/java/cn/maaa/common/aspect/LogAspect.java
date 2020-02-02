@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
  * @author mazh
  * @date 2019年02月26日 11:06 
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class LogAspect {
 
 	private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
