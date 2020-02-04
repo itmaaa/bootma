@@ -158,7 +158,7 @@ public class UserController extends BaseController<User> {
 		return M.ok();
 	}
 
-	@PostMapping("/resetPwd")
+	@PostMapping("/reset")
 	@ResponseBody
 	@Route("重置密码")
 	M resetPwd(UserDTO userDTO) {

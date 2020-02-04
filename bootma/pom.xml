@@ -154,6 +154,12 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>net.mingsoft</groupId>
+			<artifactId>shiro-freemarker-tags</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
 		<!--commons -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

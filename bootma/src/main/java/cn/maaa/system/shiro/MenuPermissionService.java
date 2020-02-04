@@ -1,20 +1,13 @@
 package cn.maaa.system.shiro;
 
-import cn.maaa.common.config.MenuScanner;
+import cn.maaa.common.utils.MenuScanner;
 import cn.maaa.system.domain.Menu;
 import cn.maaa.system.mapper.MenuMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.config.Ini;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.config.IniFilterChainResolverFactory;
-import org.mockito.internal.matchers.Find;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -44,9 +37,15 @@ public class MenuPermissionService  {
                          .isNotNull("perms")
                          .ne("perms","");
         Map<String, String> map = menuMapper.selectList(menuQueryWrapper)
-                .stream().collect(Collectors.toMap(Menu::getUrl, menu -> String.format("perms[%s]",menu.getPerms())));
+                .stream().collect(Collectors.toMap(menu -> subUrl(menu.getUrl()), menu -> String.format("perms[%s]",menu.getPerms())));
         log.info(map.toString());
         return  map;
+    }
+
+    private static String subUrl(String url){
+        if(url.contains("{"))
+            return url.substring(0,url.lastIndexOf("/")+1)+"*";
+        return url;
     }
 
 }

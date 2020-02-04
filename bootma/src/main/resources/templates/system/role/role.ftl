@@ -9,37 +9,39 @@
 			<div class="ibox">
 				<div class="ibox-body">
 					<div id="exampleToolbar" role="group">
-						<button shiro:hasPermission="sys:role:add" type="button"
-							class="btn btn-primary" onclick="add()">
-							<i class="fa fa-plus" aria-hidden="true"></i>添加
-						</button>
-						<button shiro:hasPermission="sys:role:batchRemove" type="button"
-							class="btn btn-danger" onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
-						</button>
+						<@shiro.hasPermission name="sys:role:add">
+								<button  type="button"
+									class="btn btn-primary" onclick="add()">
+									<i class="fa fa-plus" aria-hidden="true"></i>添加
+								</button>
+						</@shiro.hasPermission>
+						<@shiro.hasPermission name="sys:role:batchRemove">
+							<button type="button"
+								class="btn btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</@shiro.hasPermission>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
 				</div>
 			</div>
 		</div>
-		<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
+		<!--shiro控制bootstraptable行内按钮看见性 来自bootma的创新方案 -->
 			<script type="text/javascript">
 				var s_edit_h = 'hidden';
 				var s_remove_h = 'hidden';
 			</script>
-		</div>
-		<div shiro:hasPermission="sys:role:edit">
-			<script type="text/javascript">
-				s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="sys:role:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
+		<@shiro.hasPermission name="sys:role:edit">
+                <script type="text/javascript">
+                    s_edit_h = '';
+                </script>
+		</@shiro.hasPermission>
+		<@shiro.hasPermission name="sys:role:remove">
+                <script type="text/javascript">
+                    var s_remove_h = '';
+                </script>
+		</@shiro.hasPermission>
 
 	</div>
     <#include '../../footer.ftl'/>
