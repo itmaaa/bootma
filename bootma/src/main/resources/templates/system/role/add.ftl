@@ -22,13 +22,20 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">备注：</label>
-								<div class="col-sm-8">
-									<input id="remark" name="remark" class="form-control"
-										type="text">
+                                <label class="col-sm-3 control-label">标识：</label>
+                                <div class="col-sm-8">
+                                    <input id="roleSign" name="roleSign" class="form-control"
+                                    type="text">
 								</div>
 							</div>
-							<div class="form-group">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">备注：</label>
+                                <div class="col-sm-8">
+                                    <input id="remark" name="remark" class="form-control"
+                                           type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
 								<label class="col-sm-3 control-label">菜单权限：</label>
 								<div class="col-sm-8">
 									<div id="menuTree"></div>

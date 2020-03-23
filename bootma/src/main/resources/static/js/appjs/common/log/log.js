@@ -59,10 +59,10 @@ function load() {
                     {
                         checkbox: true
                     },
-                    {
+                  /*  {
                         field: 'id', // 列字段名
                         title: '序号' // 列标题
-                    },
+                    },*/
                     {
                         field: 'userId',
                         title: '用户Id'
@@ -70,6 +70,10 @@ function load() {
                     {
                         field: 'username',
                         title: '用户名'
+                    },
+                    {
+                        field: 'gmtCreate',
+                        title: '创建时间'
                     },
                     {
                         field: 'operation',
@@ -90,10 +94,6 @@ function load() {
                     {
                         field: 'ip',
                         title: 'IP地址'
-                    },
-                    {
-                        field: 'gmtCreate',
-                        title: '创建时间'
                     },
                     {
                         title: '操作',

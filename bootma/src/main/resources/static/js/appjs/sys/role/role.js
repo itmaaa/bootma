@@ -51,13 +51,14 @@ function load() {
 									title : '角色名'
 								},
 								{
+									field : 'roleSign',
+									title : '角色标识'
+								},
+								{
 									field : 'remark',
 									title : '备注'
 								},
-								{
-									field : '',
-									title : '权限'
-								},
+
 								{
 									title : '操作',
 									field : 'id',

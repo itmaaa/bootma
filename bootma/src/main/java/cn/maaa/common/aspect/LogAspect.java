@@ -17,14 +17,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * 日志切面
@@ -56,9 +60,9 @@ public class LogAspect {
 		ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		RequestContextHolder.setRequestAttributes(sra, true);
 		//异步保存日志
-		executorService.execute(()-> {
+		//executorService.execute(()-> {
 			saveLog(point, time);
-		});
+		//});
 
 		return result;
 	}
@@ -78,8 +82,9 @@ public class LogAspect {
 		String methodName = signature.getName();
 		log.setMethod(className + "." + methodName + "()");
 		// 请求的参数
-		Object[] args = joinPoint.getArgs();
-		if(args.length != 0 ){
+		List<Object> args = Arrays.stream(joinPoint.getArgs()).filter(a -> !(a instanceof Model)).collect(Collectors.toList());
+
+		if(args.size() > 0 ){
 			try {
 				String params = JsonUtils.beanToJson(args);
 				if(params.length() > 999)

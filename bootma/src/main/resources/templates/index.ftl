@@ -73,7 +73,7 @@
               <#if menus?? && menus?size gt 0>
                 <#list menus as menu>
                     <li>
-                         <a href="#"> <i class="${menu.attributes.icon}"></i>
+                         <a href="#"> <i class="${menu.attributes.icon!}"></i>
                              <span class="nav-label">${menu.text}</span> <span class="fa arrow"></span>
                          </a>
                          <ul class="nav nav-second-level">
@@ -155,7 +155,7 @@
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
                     <a href="javascript:;" class="active J_menuTab"
-                       data-id="index_v1.html">首页</a>
+                       data-id="index.ftl">首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight">
@@ -177,7 +177,7 @@
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%"
-                    src="" src="/main" frameborder="0" data-id="index_v1.html"
+                     src="/main" frameborder="0" data-id="index.ftl"
                     seamless></iframe>
         </div>
         <div class="footer">

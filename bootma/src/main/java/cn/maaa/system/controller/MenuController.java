@@ -1,6 +1,7 @@
 package cn.maaa.system.controller;
 
 import cn.maaa.common.annotation.Route;
+import cn.maaa.common.constants.MenuEnum;
 import cn.maaa.common.controller.BaseController;
 import cn.maaa.common.domain.Tree;
 import cn.maaa.common.utils.M;
@@ -78,7 +79,19 @@ public class MenuController extends BaseController<Menu> {
 	@PostMapping("/save")
 	@ResponseBody
 	M save(Menu menu) {
-		return super.insertOrUpdate(menu);
+        Menu parentMenu = menuService.getById(menu.getParentId());
+        if ((parentMenu == null)) {
+            parentMenu = new Menu().setType(0);
+        }
+        if(MenuEnum.CATALOGUE.getVal().equals(parentMenu.getType()) &&
+                MenuEnum.BUTTON.getVal().equals(menu.getType()))
+            return M.error("目录下级不能直接添加按钮");
+		if(MenuEnum.MENU.getVal().equals(parentMenu.getType()) &&
+                !MenuEnum.BUTTON.getVal().equals(menu.getType()))
+			return M.error("菜单下级只能添加按钮");
+        if(MenuEnum.BUTTON.getVal().equals(parentMenu.getType()))
+            return M.error("按钮下级不支持添加");
+        return super.insertOrUpdate(menu);
 	}
 
 	@Route("删除菜单")

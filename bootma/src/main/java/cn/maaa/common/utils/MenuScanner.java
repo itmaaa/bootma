@@ -1,4 +1,4 @@
-package cn.maaa.common.config;
+package cn.maaa.common.utils;
 
 import cn.maaa.common.annotation.Route;
 import cn.maaa.system.domain.Menu;
@@ -14,8 +14,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  *  菜单扫描器
@@ -192,7 +189,9 @@ public class MenuScanner  {
             return null;
         String s = String.join(":", path);
         if(s.startsWith(":"))
-                return  s.substring(1);
+                s = s.substring(1);
+        if(s.contains("{"))
+                return s.substring(0,s.lastIndexOf(":"));
         return s;
     }
 

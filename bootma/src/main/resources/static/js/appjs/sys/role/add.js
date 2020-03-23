@@ -55,7 +55,10 @@ function validateRule() {
 		rules : {
 			roleName : {
 				required : true
-			}
+			},
+            roleSign : {
+                required : true
+            }
 		},
 		messages : {
 			roleName : {

@@ -39,7 +39,7 @@ public class LoginController extends BaseController {
     @GetMapping({ "/", "" })
     @Route("welcome")
     String welcome(Model model) {
-        return "redirect:/index";
+        return "redirect:/login";
     }
 
     @Route("登录页面")
