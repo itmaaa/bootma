@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.algorithm;
 
 import java.util.Arrays;
 import java.util.HashSet;

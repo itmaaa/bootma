@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.thread;
 
 /**
  *   两个线程交替打印0~100的奇偶数：

@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.algorithm;
 
 import com.google.common.primitives.Ints;
 

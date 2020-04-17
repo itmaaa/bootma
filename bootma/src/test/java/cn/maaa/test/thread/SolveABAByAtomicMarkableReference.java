@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.thread;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicMarkableReference;

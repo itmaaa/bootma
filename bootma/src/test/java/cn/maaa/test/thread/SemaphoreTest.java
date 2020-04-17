@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

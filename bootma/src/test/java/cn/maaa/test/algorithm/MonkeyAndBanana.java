@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.algorithm;
 
 /**
  * 描述信息

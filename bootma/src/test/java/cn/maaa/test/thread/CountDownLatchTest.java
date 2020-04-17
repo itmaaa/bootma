@@ -1,4 +1,4 @@
-package cn.maaa.test;
+package cn.maaa.test.thread;
 
 import com.xiaoleilu.hutool.date.BetweenFormater;
 import com.xiaoleilu.hutool.date.DateUtil;
