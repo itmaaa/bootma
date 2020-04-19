@@ -16,8 +16,8 @@ public class SinglyLinkedList {
 
 	public static void main(String[] args) {
 		//reverse();
-		Node node1 = initNode("243");
-		Node node2 = initNode("564");
+		Node node1 = initNode("246");
+		Node node2 = initNode("564999");
 		print(linkAdd(node1,node2));
 	}
 
@@ -55,14 +55,31 @@ public class SinglyLinkedList {
 
 	public static Node linkAdd(Node node1,Node node2){
 
-
 		if(node1 == null)
 			return node2;
 		if(node2 == null)
 			return node1;
 
-		//node1.next = new Node(0);
-		//node2.next = new Node(0);
+		Node temp1 = node1;
+		Node temp2 = node2;
+
+		//对齐
+		while(node1 != null || node2 != null){
+			if(node1.next == null && node2.next == null)
+			     break;
+			else if(node1.next == null){
+					node1.next = new Node(0);
+			}else if(node2.next == null){
+					node2.next = new Node(0);
+			}
+
+			node1 = node1.next;
+			node2 = node2.next;
+
+		}
+		node1 = temp1;
+		node2 = temp2;
+
 		//标志是否进位
 		boolean flag = false;
 		//结果
@@ -70,10 +87,15 @@ public class SinglyLinkedList {
 		Node temp = null;
 
 		while (node1 != null && node2 != null){
+			    //if()
 				int sum = node1.getData() + node2.getData();
 				int number  = sum % 10;
 				if(flag){
 					number++;
+					if(number == 10){
+						number  = sum % 10;
+						sum++;
+					}
 					flag = false;
 				}
 				flag = sum / 10 == 1 ;
@@ -92,12 +114,29 @@ public class SinglyLinkedList {
 		}
 		if(flag)
 			temp.next = new Node(1);
-		if(node1 == null)
-			temp.next = node2;
-		if(node2 == null)
-			temp.next = node1;
 
 		return result;
+
+		/*Node dummyHead = new Node(0);
+		Node p = node1, q = node2, curr = dummyHead;
+		//carry 表示进位数
+		int carry = 0;
+		while (p != null || q != null) {
+			int x = (p != null) ? p.getData() : 0;
+			int y = (q != null) ? q.getData() : 0;
+			int sum = carry + x + y;
+			//进位数
+			carry = sum / 10;
+			//新节点的数值为sum % 10
+			curr.next = new Node(sum % 10);
+			curr = curr.next;
+			if (p != null) p = p.next;
+			if (q != null) q = q.next;
+		}
+		if (carry > 0) {
+			curr.next = new Node(carry);
+		}
+		return dummyHead.next;*/
 
 	}
 
