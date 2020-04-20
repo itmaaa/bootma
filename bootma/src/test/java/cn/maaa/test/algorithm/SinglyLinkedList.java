@@ -16,12 +16,12 @@ public class SinglyLinkedList {
 
 	public static void main(String[] args) {
 		//reverse();
-		//Node node1 = initNode("246");
-		//Node node2 = initNode("564999");
-		Node node1 = initNode("243");
-		Node node2 = initNode("564");
+		Node node1 = initNode("246");
+		Node node2 = initNode("564999");
 		print(linkAdd(node1,node2));
 	}
+
+
 
 
 	/**
@@ -38,23 +38,7 @@ public class SinglyLinkedList {
 	 *
 	 * */
 
-	public static Node initNode(String number){
-		char[] chars = number.toCharArray();
-		Node data = null;
-		Node temp = null;
-
-		for (char aChar : chars) {
-			// char ‘3’ 转为 int 3, 不能直接转化，那样得到是‘3’的Ascii
-			Node node = new Node(aChar - '0');
-			if(temp != null)
-				temp.setNext(node);
-			else
-				data = node;
-			temp = node;
-		}
-		return data;
-	}
-
+	//解法一   不简洁
 	public static Node linkAdd(Node node1,Node node2){
 
 		if(node1 == null)
@@ -62,59 +46,55 @@ public class SinglyLinkedList {
 		if(node2 == null)
 			return node1;
 
-		Node temp1 = node1;
-		Node temp2 = node2;
+		//链表补齐等长
+		Node temp1 = node1, temp2 = node2;
 
-		//对齐
-		while(node1 != null || node2 != null){
-			if(node1.next == null && node2.next == null)
+		while(temp1 != null || temp2 != null){
+			if(temp1.next == null && temp2.next == null)
 			     break;
-			else if(node1.next == null){
-					node1.next = new Node(0);
-			}else if(node2.next == null){
-					node2.next = new Node(0);
+			else if(temp1.next == null){
+				temp1.next = new Node(0);
+			}else if(temp2.next == null){
+				temp2.next = new Node(0);
 			}
 
-			node1 = node1.next;
-			node2 = node2.next;
+			temp1 = temp1.next;
+			temp2 = temp2.next;
 
 		}
-		node1 = temp1;
-		node2 = temp2;
-
 		//标志是否进位
 		boolean flag = false;
-		//结果
-		Node result = null ;
-		Node temp = null;
+		//结果  哑节点
+		Node result =  new Node(0);
+		Node  curr = result ;
 
 		while (node1 != null && node2 != null){
 			    //if()
 				int sum = node1.getData() + node2.getData();
-				if(flag){
-					sum++;
-				}
+				if(flag)sum++;
+
 			    int number  = sum % 10;
 				flag = sum / 10 == 1 ;
 
 				Node node = new Node(number);
 
-				if(temp != null)
-					temp.setNext(node);
-                else
-                	result = node;
+				curr.setNext(node);
+			    curr = node;
 
-			    temp = node;
 				node1 = node1.next;
 				node2 = node2.next;
 
 		}
 		if(flag)
-			temp.next = new Node(1);
+			curr.next = new Node(1);
 
-		return result;
+		return result.next;
 
-		/*Node dummyHead = new Node(0);
+	}
+
+	//解法二   简洁
+	public static Node linkAdd1(Node node1,Node node2){
+		Node dummyHead = new Node(0);
 		Node p = node1, q = node2, curr = dummyHead;
 		//carry 表示进位数
 		int carry = 0;
@@ -133,8 +113,7 @@ public class SinglyLinkedList {
 		if (carry > 0) {
 			curr.next = new Node(carry);
 		}
-		return dummyHead.next;*/
-
+		return dummyHead.next;
 	}
 
 	/**
@@ -220,6 +199,24 @@ public class SinglyLinkedList {
 		node3.setNext(node4);
 
 		return node1;
+	}
+
+	/**
+	 *  字符串转链表
+	 *  234   2 -> 3 -> 4
+	 * */
+	public static Node initNode(String number){
+		char[] chars = number.toCharArray();
+		Node temp = new Node(0);
+		Node data = temp;
+
+		for (char aChar : chars) {
+			// char ‘3’ 转为 int 3, 不能直接转化，那样得到是‘3’的Ascii
+			Node node = new Node(aChar - '0');
+			temp.setNext(node);
+			temp = node;
+		}
+		return data.next;
 	}
 
 	/**
