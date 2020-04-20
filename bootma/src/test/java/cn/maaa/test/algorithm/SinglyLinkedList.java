@@ -16,12 +16,134 @@ public class SinglyLinkedList {
 
 	public static void main(String[] args) {
 		//reverse();
-		Node node1 = initNode("246");
+		/*Node node1 = initNode("246");
 		Node node2 = initNode("564999");
-		print(linkAdd(node1,node2));
+		print(linkAdd(node1,node2));*/
+
+		/*Node node = initNode("1234");
+		print(findNode(node,2));*/
+
+		/*Node node = initNode("12345");
+		print(removeNode(node,1));*/
+
+		/*Node node1 = initNode("1357");
+		Node node2 = initNode("124899");
+		print(merge(node1,node2));*/
 	}
 
 
+	/**
+	 * 题目描述：
+	 *
+	 * 剑指offer:输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+	 *
+	 * 问题分析：
+	 *
+	 * 我们可以这样分析:
+	 *
+	 * 假设我们有两个链表 A,B；
+	 * A的头节点A1的值与B的头结点B1的值比较，假设A1小，则A1为头节点；
+	 * A2再和B1比较，假设B1小,则，A1指向B1；
+	 * A2再和B2比较 就这样循环往复就行了，应该还算好理解。
+	 * 考虑通过递归的方式实现！
+	 *
+	 *  8 -> 9 ->9    7 -> 8 -> 9 ->9   5 -> 7 -> 8 -> 9 ->9   4 -> 5 -> 7 -> 8 -> 9 ->9
+	 * */
+
+
+	public static Node merge(Node node1,Node node2){
+		if(node1 == null)
+			//递归最后返回 8 -> 9 ->9
+			return node2;
+		if(node2 == null)
+			return node1;
+
+		if(node1.data < node2.data){
+			// 7 -> 8 -> 9 ->9
+			node1.next = merge(node1.next, node2);
+			// 返回7节点
+			return node1;
+		}else {
+			node2.next =  merge(node2.next, node1);
+			return node2;
+		}
+
+	}
+
+
+	/**
+	 * Leetcode:给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+	 *
+	 * 示例：
+	 *
+	 * 给定一个链表: 1->2->3->4->5, 和 n = 2.
+	 *
+	 * 当删除了倒数第二个节点后，链表变为 1->2->3->5.
+	 * Copy to clipboardErrorCopied
+	 * 说明：
+	 *
+	 * 给定的 n 保证是有效的。
+	 *
+	 * 进阶：
+	 *
+	 * 你能尝试使用一趟扫描实现吗？
+	 *
+	 * */
+	public static Node removeNode(Node node,int k){
+		// 如果链表为空
+		if (node == null) {
+			return null;
+		}
+
+		Node dummy = new Node(0);
+		dummy.next = node;
+
+		Node first = dummy , second = dummy;
+
+		//查询倒数第n个节点的前一个节点
+		int n = 1;
+		while (first.next != null){
+			first = first.next;
+			if(n >= k + 1)
+				second = second.next;
+			n++;
+		}
+
+		second.next = second.next.next;
+
+		return dummy.next;
+	}
+
+
+	/**
+	 * 题目描述
+	 * 剑指offer: 输入一个链表，输出该链表中倒数第k个结点。
+	 *
+	 * 问题分析
+	 * 链表中倒数第k个节点也就是正数第(L-K+1)个节点，知道了只一点，这一题基本就没问题！
+	 *
+	 * 首先两个节点/指针，一个节点 node1 先开始跑，指针 node1 跑到 k-1 个节点后，另一个节点 node2 开始跑，当 node1 跑到最后时，node2 所指的节点就是倒数第k个节点也就是正数第(L-K+1)个节点。
+	 * */
+	public static Node findNode(Node node,int k){
+		// 如果链表为空或者k小于等于0
+		if (node == null || k <= 0) {
+			return null;
+		}
+
+		//倒数第n个节点
+		Node first = node , second = node;
+        int n = 1;
+        while (first.next != null){
+        	first = first.next;
+        	if(n >= k)
+				second = second.next;
+			n++;
+		}
+
+		if(n < k) return null;
+
+		return second;
+	}
 
 
 	/**
@@ -70,7 +192,7 @@ public class SinglyLinkedList {
 
 		while (node1 != null && node2 != null){
 			    //if()
-				int sum = node1.getData() + node2.getData();
+				int sum = node1.data + node2.data;
 				if(flag)sum++;
 
 			    int number  = sum % 10;
@@ -99,8 +221,8 @@ public class SinglyLinkedList {
 		//carry 表示进位数
 		int carry = 0;
 		while (p != null || q != null) {
-			int x = (p != null) ? p.getData() : 0;
-			int y = (q != null) ? q.getData() : 0;
+			int x = (p != null) ? p.data : 0;
+			int y = (q != null) ? q.data : 0;
 			int sum = carry + x + y;
 			//进位数
 			carry = sum / 10;
@@ -225,7 +347,7 @@ public class SinglyLinkedList {
 	public static void print(Node head){
 		Node h = head;
 		while (h != null){
-			System.out.print(h.getData());
+			System.out.print(h.data);
 			if (h.next == null)
 				System.out.println();
 			else
