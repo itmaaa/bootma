@@ -16,8 +16,10 @@ public class SinglyLinkedList {
 
 	public static void main(String[] args) {
 		//reverse();
-		Node node1 = initNode("246");
-		Node node2 = initNode("564999");
+		//Node node1 = initNode("246");
+		//Node node2 = initNode("564999");
+		Node node1 = initNode("243");
+		Node node2 = initNode("564");
 		print(linkAdd(node1,node2));
 	}
 
@@ -89,15 +91,10 @@ public class SinglyLinkedList {
 		while (node1 != null && node2 != null){
 			    //if()
 				int sum = node1.getData() + node2.getData();
-				int number  = sum % 10;
 				if(flag){
-					number++;
-					if(number == 10){
-						number  = sum % 10;
-						sum++;
-					}
-					flag = false;
+					sum++;
 				}
+			    int number  = sum % 10;
 				flag = sum / 10 == 1 ;
 
 				Node node = new Node(number);
