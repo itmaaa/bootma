@@ -10,7 +10,7 @@ import java.util.HashSet;
 public class PalindromeString {
 
     public static void main(String[] args) {
-        System.out.println(new PalindromeString().test1("abababx"));
+      //  System.out.println(new PalindromeString().test1("abababx"));
        // System.out.println(new PalindromeString().test1("asdfttfddfttf"));
 
         //System.out.println(new PalindromeString().test2("abccccdd"));
@@ -18,8 +18,11 @@ public class PalindromeString {
        // System.out.println(new PalindromeString().test3("A man, a plan, a canal: Panama"));
         //System.out.println(new PalindromeString().test3("race a car"));
 
-
+        System.out.println(test4("BBABCBCAB"));
     }
+
+
+
 
     /**
      *   Leetcode: LeetCode: 最长回文子串 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为1000。
@@ -130,6 +133,77 @@ public class PalindromeString {
         }
         return true;
     }
+
+    /**
+     * 最长回文子序列 的长度
+     * 分析
+     * 对任意字符串，如果头和尾相同，那么它的最长回文子序列一定是去头去尾之后的部分的最长回文子序列加上头和尾。
+     * 如果头和尾不同，那么它的最长回文子序列是去头的部分的最长回文子序列和去尾的部分的最长回文子序列的较长的那一个。
+     *
+     * str[0...n-1]是给定的字符串序列，长度为n，假设f(0,n-1)表示序列str[0...n-1]的最长回文子序列的长度。
+     *
+     * 1.如果str的最后一个元素和第一个元素是相同的，则有：f(0,n-1)=f(1,n-2)+2；例如字符串序列“AABACACBA”，第一个元素和最后一个元素相同，其中f(1,n-2)表示红色部分的最长回文子序列的长度；
+     *
+     * 2.如果str的最后一个元素和第一个元素是不相同的，则有：f(0,n-1)=max(f(1,n-1),f(0,n-2))；例如字符串序列“ABACACB”，其中f(1,n-1)表示去掉第一元素的子序列，f(0,n-2)表示去掉最后一个元素的子序列。
+     *
+     *  设字符串为s，f(i,j)表示s[i..j]的最长回文子序列。
+     *
+     * 状态转移方程如下：
+     *
+     * 当i>j时，f(i,j)=0。
+     *
+     * 当i=j时，f(i,j)=1。
+     *
+     * 当i<j并且s[i]=s[j]时，f(i,j)=f(i+1,j-1)+2。
+     *
+     * 当i<j并且s[i]≠s[j]时，f(i,j)=max( f(i,j-1), f(i+1,j) )。
+     *
+     * 由于f(i,j)依赖i+1，所以循环计算的时候，第一维必须倒过来计算，从s.length()-1到0。
+     *
+     * 最后，s的最长回文子序列长度为f(0, s.length()-1)。
+     *  以"BBABCBCAB"为例：
+     *       i\j  0  1  2  3  4  5  6  7  8
+     *        0   1  2  2  3  3  5  5  5  7
+     *        1   0  1  1  3  3  3  3  5  7
+     *        2   0  0  1  1  1  3  3  5  5
+     *        3   0  0  0  1  1  3  3  3  5
+     *        4   0  0  0  0  1  1  3  3  3
+     *        5   0  0  0  0  0  1  1  1  3
+     *        6   0  0  0  0  0  0  1  1  1
+     *        7   0  0  0  0  0  0  0  1  1
+     *        8   0  0  0  0  0  0  0  0  1
+     *
+     *   每一个数据需要知道它的左侧，下方，左下方的数据
+     *   所以初始数据从 最后一行第一列开始
+     * */
+
+    public static int test4(String s) {
+
+        int length = s.length();
+        int[][] array = new int[length][length];
+
+        char[] chars = s.toCharArray();
+
+        for (int i = length - 1; i >=0 ; i--) {
+            for (int j = 0; j < length; j++) {
+                if(i > j)
+                    array[i][j] = 0;
+                else if(i == j)
+                    array[i][j] = 1;
+                else {
+                    if(chars[i] == chars[j])
+                        array[i][j] = array[i+1][j-1] + 2;
+                    else
+                        array[i][j] = Math.max(array[i+1][j], array[i][j-1]);
+                }
+
+            }
+
+        }
+        return array[0][length-1];
+    }
+
+
 
 
 
