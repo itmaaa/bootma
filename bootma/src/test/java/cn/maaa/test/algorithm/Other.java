@@ -3,7 +3,7 @@ package cn.maaa.test.algorithm;
 import java.util.Scanner;
 
 /**
- * 描述信息
+ * 其他算法题
  *
  * @author maaa
  * @date 2020年04月19日 12:07
