@@ -1,5 +1,6 @@
 package cn.maaa.test.algorithm;
 
+import cn.maaa.test.Node;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -29,6 +30,40 @@ public class SinglyLinkedList {
 		/*Node node1 = initNode("1357");
 		Node node2 = initNode("124899");
 		print(merge(node1,node2));*/
+
+		Node node = initNode("1357");
+		Node deleteNode = node.next;
+		deleteNode(deleteNode);
+		print(node);
+
+	}
+
+   /**
+	* 请编写一个函数，使其可以删除某个链表中给定的（非末尾）节点，你将只被给定要求被删除的节点。
+	*
+	* 示例 1:
+	*
+	* 输入: head = [4,5,1,9], node = 5
+	* 输出: [4,1,9]
+	* 解释: 给定你链表中值为 5 的第二个节点，那么在调用了你的函数之后，该链表应变为 4 -> 1 -> 9.
+	* 示例 2:
+	*
+	* 输入: head = [4,5,1,9], node = 1
+	* 输出: [4,5,9]
+	* 解释: 给定你链表中值为 1 的第三个节点，那么在调用了你的函数之后，该链表应变为 4 -> 5 -> 9.
+	*  
+	*
+	* 说明:
+	*
+	* 链表至少包含两个节点。
+	* 链表中所有节点的值都是唯一的。
+	* 给定的节点为非末尾节点并且一定是链表中的一个有效节点。
+	* 不要从你的函数中返回任何结果。
+	*
+	* */
+	public static void deleteNode(Node node) {
+		node.data = node.next.data;
+		node.next = node.next.next;
 	}
 
 
@@ -300,10 +335,11 @@ public class SinglyLinkedList {
       Node temp = head.next;
 	  Node newHead = reverse2(temp);
 
+	  // 3-> 4 改为 4 ->3,断掉 3 -> 4
 	  temp.next = head ;
 	  head.next = null;
 
-	  //返回的节点始终是最后的节点，即新的头节点，递归只是更改节点的内指向
+	  //返回的节点始终是最后的节点，即新的头节点，递归只是调转节点的内指向
       return newHead;
 	}
 
@@ -356,16 +392,6 @@ public class SinglyLinkedList {
 		}
 	}
 
-	@Data
-	@Accessors(chain = true)
-	public static class Node {
-		public int data;
-		public Node next;
-
-		public Node(int data) {
-			this.data = data;
-		}
-	}
 
 }
 
