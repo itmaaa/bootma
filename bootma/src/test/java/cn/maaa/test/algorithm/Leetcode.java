@@ -2,7 +2,6 @@ package cn.maaa.test.algorithm;
 
 import cn.maaa.test.Node;
 
-import javax.sound.midi.Soundbank;
 import java.util.Arrays;
 
 /**
@@ -19,12 +18,73 @@ public class Leetcode {
 
         //char[] chars = {'h', 'e', 'l', 'l', 'o'};
        // reverseString(chars);
-        Node node = initNode("12345");
+        //Node node = initNode("12345");
         //print(reverseList(node));
        // print(reverseList1(node));
 
-        System.out.println(singleNumber(new int[]{4,1,2,1,2}));
+       // System.out.println(singleNumber(new int[]{4,1,2,1,2}));
+
+       // System.out.println(maxProfit(new int[]{7,1,5,3,6,4}));
+        System.out.println(maxProfit2(new int[]{7,1,5,3,6,4}));
+
+       /* Node common = initNode("24");
+        Node headA = new Node(3);
+        headA.next = common;
+        Node headB = new Node(0);
+        headB.next = new Node(9);
+        headB.next.next = new Node(1);
+        headB.next.next.next = common;
+        print(getIntersectionNode(headA,headB));*/
     }
+
+
+    public static Node getIntersectionNode(Node headA, Node headB) {
+        if(headA == null || headB == null)
+            return null;
+         Node temp1 = headA,temp3 = headA;
+         Node temp2 = headB,temp4 = headB;
+          while ( true){
+              if(temp1 == null && temp2 == null)
+                  return null;
+              if(temp1 == null ){
+                  temp1 = headA;
+                  temp2 = temp4 = temp4.next;
+              }
+              if(temp2 == null ){
+                  temp2 = headB;
+                  temp1 = temp3 = temp3.next;
+              }
+
+              if(temp1 == temp2)
+                  return temp1;
+              temp1 = temp1.next;
+              temp2 = temp2.next;
+          }
+    }
+
+    public static int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+                int temp = prices[i+1] - prices[i];
+                if( temp > 0){
+                    profit += temp;
+                }
+        }
+        return profit;
+    }
+
+    public static int maxProfit2(int[] prices) {
+        int profit = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            for (int j = i + 1; j < prices.length ; j++) {
+                int temp = prices[j] - prices[i];
+                 profit = temp > profit ? temp : profit;
+            }
+        }
+        return profit;
+    }
+
+
 
     /**
      * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
