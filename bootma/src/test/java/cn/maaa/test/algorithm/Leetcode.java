@@ -2,7 +2,9 @@ package cn.maaa.test.algorithm;
 
 import cn.maaa.test.Node;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author :  mazh
@@ -25,7 +27,7 @@ public class Leetcode {
        // System.out.println(singleNumber(new int[]{4,1,2,1,2}));
 
        // System.out.println(maxProfit(new int[]{7,1,5,3,6,4}));
-        System.out.println(maxProfit2(new int[]{7,1,5,3,6,4}));
+        //System.out.println(maxProfit2(new int[]{7,1,5,3,6,4}));
 
        /* Node common = initNode("24");
         Node headA = new Node(3);
@@ -35,6 +37,115 @@ public class Leetcode {
         headB.next.next = new Node(1);
         headB.next.next.next = common;
         print(getIntersectionNode(headA,headB));*/
+
+       // System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
+        //System.out.println(climbStairs(10));
+
+       /* Node node1 = new Node(0);
+        Node node2 = new Node(9);
+        Node node3 = new Node(1);
+        Node node4 = new Node(2);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node2;
+        System.out.println(hasCycle(node1));*/
+
+        //System.out.println(isPowerOfTwo(1073254675));
+
+        int[] nums1 = new int[1];
+        int[] nums2 = new int[]{1};
+         int  n = 1,  m = 0;
+         merge(nums1,m,nums2,n);
+        System.out.println();
+    }
+
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+
+        int last = m + n - 1;
+        int j = n - 1;
+        int i = m - 1;
+
+        while(j >= 0){
+            if( i < 0 || nums2[j] > nums1[i] ){
+                nums1[last--] = nums2[j--];
+            }else {
+                nums1[last--] = nums1[i--] ;
+            }
+        }
+    }
+
+    public static boolean isPowerOfTwo(int n) {
+        int curr  = 1;
+        while (curr < n){
+            //curr = curr << 1;
+            curr = curr * 2 ;
+        }
+        return curr == n;
+
+        /*if (n == 0) return false;
+        while (n % 2 == 0) n /= 2;
+        return n == 1;*/
+    }
+
+    public static boolean hasCycle(Node head) {
+        /*HashSet<Node> hashSet = new HashSet<>();
+        hashSet.add(head);
+        while (head != null){
+             if(!hashSet.add(head))
+                 return true;
+             head = head.next;
+        }
+        return false;*/
+        Node fast = head ,slow = head;
+        while (fast != null && fast.next != null){
+            if(fast == slow)
+                return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return false;
+
+    }
+
+    public static int climbStairs(int n) {
+        if(n == 1)
+            return 1;
+        if(n == 2)
+            return 2;
+
+       // return climbStairs(n - 1) + climbStairs(n - 2);
+        int first = 1,second = 2, third = 0;
+        for (int i = 3; i <= n ; i++) {
+            third = first + second;
+            first = second;
+            second = third;
+        }
+        return third;
+    }
+
+    //0,0,1,1,1,2,2,3,3,4
+    public static int removeDuplicates(int[] nums) {
+        if(nums.length == 1)
+            return 1;
+        int j = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if(nums[i] != nums[i+1] )
+                  nums[j++] = nums[i];
+            if(i == nums.length - 2 )
+                  nums[j++] = nums[nums.length - 1];
+        }
+        return j ;
+    }
+
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (int num : nums) {
+            if(!hashSet.add(num))
+                return true;
+        }
+        return false;
     }
 
 
@@ -74,13 +185,24 @@ public class Leetcode {
     }
 
     public static int maxProfit2(int[] prices) {
-        int profit = 0;
+        //暴力法
+       /* int profit = 0;
         for (int i = 0; i < prices.length - 1; i++) {
             for (int j = i + 1; j < prices.length ; j++) {
                 int temp = prices[j] - prices[i];
                  profit = temp > profit ? temp : profit;
             }
         }
+        return profit;*/
+
+       //一次遍历  7,1,5,3,6,4
+        int profit = 0;
+        int lowest = Integer.MAX_VALUE;
+        for (int price : prices) {
+            lowest = price < lowest ? price : lowest;
+            profit = price - lowest >  profit ? price - lowest : profit;
+        }
+
         return profit;
     }
 
