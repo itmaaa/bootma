@@ -1,10 +1,9 @@
 package cn.maaa.test.algorithm;
 
 import cn.maaa.test.Node;
+import cn.maaa.test.TreeNode;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author :  mazh
@@ -64,6 +63,86 @@ public class Leetcode {
         //System.out.println(longestCommonPrefix(new String[]{"dog","racecar","car"}));
        // int reverse = reverse(1463847412);
        //  System.out.println(reverse);
+
+        //System.out.println(isPalindrome(123));
+
+        Node node1 = new Node(5);
+        Node node2 = new Node(1);
+        Node node3 = new Node(2);
+        Node node4 = new Node(4);
+        node2.next = node3;
+        node3.next = node4;
+        mergeTwoLists(node1,node2);
+    }
+
+    /**
+     * 将两个升序链表合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+     *
+     * 示例：
+     *
+     * 输入：1->2->4, 1->3->4
+     * 输出：1->1->2->3->4->4
+     * */
+
+    public static Node mergeTwoLists(Node l1, Node l2) {
+         if(l1 == null)
+             return l2;
+         if(l2 == null)
+            return l1;
+         if(l1.data <= l2.data){
+             l1.next = mergeTwoLists(l1.next,l2);
+             return l1;
+         }else{
+             l2.next = mergeTwoLists(l2.next,l1);
+             return l2;
+         }
+    }
+
+    //153351   16561
+    public static  boolean isPalindrome(int x) {
+        if(x <0 || (x % 10 == 0 && x!= 0))
+            return false;
+
+        int number = 0;
+
+        while(x > number){
+            number = number * 10 + x % 10;
+            x /= 10;
+        }
+
+        return x == number || x == number / 10;
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+          if(root.val > p.val && root.val > q.val){
+              return  lowestCommonAncestor(root.left,p,q);
+          }
+
+          if(root.val < p.val && root.val < q.val){
+              return lowestCommonAncestor(root.right,p,q);
+          }
+           return root;
+    }
+
+    public int maxDepth(TreeNode root) {
+        int count = 0;
+        ArrayList<TreeNode> parents = new ArrayList<>();
+        ArrayList<TreeNode> sons = new ArrayList<>();
+        if(root != null)
+            parents.add(root);
+        while (!parents.isEmpty()){
+            count ++;
+            for (TreeNode parent : parents) {
+                if(parent.left != null)
+                    sons.add(parent.left);
+                if(parent.right != null)
+                    sons.add(parent.right);
+            }
+            parents.clear();
+            parents.addAll(sons);
+            sons.clear();
+        }
+        return count;
     }
 
     // int 的上限 2147483647
