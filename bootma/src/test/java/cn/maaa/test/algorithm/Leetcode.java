@@ -2,9 +2,9 @@ package cn.maaa.test.algorithm;
 
 import cn.maaa.test.Node;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Stack;
 
 /**
  * @author :  mazh
@@ -53,11 +53,84 @@ public class Leetcode {
 
         //System.out.println(isPowerOfTwo(1073254675));
 
-        int[] nums1 = new int[1];
+       /* int[] nums1 = new int[1];
         int[] nums2 = new int[]{1};
          int  n = 1,  m = 0;
          merge(nums1,m,nums2,n);
-        System.out.println();
+        System.out.println();*/
+      //  System.out.println(isValid("([)]"));
+     //   System.out.println(isValid("{[]}"));
+        //System.out.println(longestCommonPrefix(new String[]{"flower","flow","flight"}));
+        //System.out.println(longestCommonPrefix(new String[]{"dog","racecar","car"}));
+       // int reverse = reverse(1463847412);
+       //  System.out.println(reverse);
+    }
+
+    // int 的上限 2147483647
+    public static int reverse(int x) {
+        int number = 0, temp = 0;
+        while(x != 0){
+            temp = x % 10;
+            if(Math.abs(number) > 214748364){
+                return 0;
+            }
+            if(Math.abs(number) == 214748364 && Math.abs(temp) > 7){
+                return 0;
+            }
+            number = number * 10 + temp ;
+            x /= 10;
+        }
+        return  number;
+
+    }
+
+    public static String longestCommonPrefix(String[] strs) {
+        int minLength = Integer.MAX_VALUE;
+        String minStr ="" ;
+        for (String str : strs) {
+            if(str.length() < minLength){
+                minLength =   str.length();
+                minStr = str;
+            }
+        }
+        char[] chars = minStr.toCharArray();
+        int i = 0;
+        for (; i < chars.length; i++) {
+            for (String str : strs) {
+                if(chars[i] != str.charAt(i))
+                    return minStr.substring(0,i);
+            }
+        }
+
+        return minStr;
+    }
+
+    public static boolean isValid(String s) {
+        char[] chars = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        stack.push(' ');
+        for (char aChar : chars) {
+            switch(aChar) {
+                case ')':
+                    if(stack.pop() != '(')
+                        return false;
+                    break;
+                case '}':
+                    if(stack.pop() != '{')
+                        return false;
+                    break;
+                case ']':
+                    if(stack.pop() != '[')
+                        return false;
+                    break;
+
+                default:
+                    stack.push(aChar);
+                    break;
+            }
+
+        }
+        return stack.size() == 1;
     }
 
     public static void merge(int[] nums1, int m, int[] nums2, int n) {

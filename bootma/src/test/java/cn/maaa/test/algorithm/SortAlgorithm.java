@@ -33,6 +33,11 @@ public class SortAlgorithm {
     }
 
     //选择排序
+    /**
+     * 在一个长度为 N 的无序数组中，第一次遍历 n-1 个数找到最小的和第一个数交换。
+     * 第二次从下一个数开始遍历 n-2 个数，找到最小的数和第二个数交换。
+     * 重复以上操作直到第 n-1 次遍历最小的数和第 n-1 个数交换，排序完成。
+     * */
     public static void selectionSort(int[] numbers){
         for (int n = 0; n < numbers.length; n++) {
             int minIndex = n;
@@ -53,6 +58,13 @@ public class SortAlgorithm {
 
 
     //冒泡排序
+    /**
+     * 比较相邻两个数据如果。第一个比第二个大，就交换两个数
+     * 对每一个相邻的数做同样1的工作，这样从开始一队到结尾一队在最后的数就是最大的数。
+     * 针对所有元素上面的操作，除了最后一个。
+     * 重复1~3步骤，知道顺序完成。
+     *
+     * */
     public static void bubbleSort(int[] numbers){
         int k = numbers.length ;
         for (int n = 0; n < numbers.length; n++) {
