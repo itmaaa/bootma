@@ -13,5 +13,6 @@ public class BranchTestA {
         System.out.println("A分支第二次提交");
         System.out.println("cherry pick1");
         System.out.println("cherry pick2");
+        System.out.println("cherry pick3");
     }
 }
