@@ -8,6 +8,8 @@ package cn.maaa.test;
  */
 public class BranchTestA {
     public static void main(String[] args) {
+
         System.out.println("A分支提交");
+        System.out.println("A分支第二次提交");
     }
 }
