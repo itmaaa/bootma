@@ -1,6 +1,5 @@
 package cn.maaa.test;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.convert.impl.PrimitiveConverter;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.ClassUtil;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import org.junit.Assert;
 import org.junit.Test;
 
 /**

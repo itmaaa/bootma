@@ -1,9 +1,7 @@
 package cn.maaa.test.thread;
 
-import com.xiaoleilu.hutool.date.BetweenFormater;
-import com.xiaoleilu.hutool.date.DateUtil;
-import lombok.extern.slf4j.Slf4j;
-
+import cn.hutool.core.date.BetweenFormater;
+import cn.hutool.core.date.DateUtil;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +9,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * CountDownLatchTest

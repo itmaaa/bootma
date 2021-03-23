@@ -1,27 +1,16 @@
 package cn.maaa.common.aspect;
 
+import cn.hutool.core.date.BetweenFormater;
+import cn.hutool.core.date.DateUtil;
 import cn.maaa.common.annotation.Route;
-import cn.maaa.common.utils.*;
+import cn.maaa.common.utils.ExceptionUtils;
+import cn.maaa.common.utils.HttpContextUtils;
+import cn.maaa.common.utils.IPUtils;
+import cn.maaa.common.utils.JsonUtils;
+import cn.maaa.common.utils.ShiroUtils;
 import cn.maaa.system.domain.Log;
 import cn.maaa.system.domain.User;
 import cn.maaa.system.service.LogService;
-import com.xiaoleilu.hutool.date.BetweenFormater;
-import com.xiaoleilu.hutool.date.DateUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
@@ -29,6 +18,18 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 日志切面
