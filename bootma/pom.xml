@@ -136,9 +136,9 @@
 		</dependency>
         <!--http://hutool.mydoc.io/-->
         <dependency>
-            <groupId>com.xiaoleilu</groupId>
+            <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>3.2.0</version>
+            <version>5.6.1</version>
         </dependency>
 
 		<!--druid -->
