@@ -1,6 +1,7 @@
 package cn.maaa.test;
 
 import java.util.*;
+import org.junit.Test;
 
 /**
  * List集合取交集、并集、去除重复数据等
@@ -48,6 +49,45 @@ public class ListTest {
 			listB.add("B");
 			listB.add("C");
 			listB.add("D");
+	}
+
+	@Test
+	public void arrayToListTest() {
+        String  [] s= new String[]{
+                "dog", "lazy", "a", "over", "jumps", "fox", "brown", "quick", "A"
+        };
+        List<String> list = Arrays.asList(s);
+        list.add("fuck");//UnsupportedOperationException
+
+	}
+
+	@Test
+	public void listModify() {
+
+		ArrayList<Integer> list1 = new ArrayList<>();
+		list1.add(1);
+		list1.add(2);
+		for (Integer num : list1) {
+			if(num.equals(1)){
+				list1.remove(num);  //正常执行
+			}
+		}
+
+		for (Integer num : list1) {
+			if(num.equals(2)){
+				list1.remove(num);  // ConcurrentModificationException
+			}
+		}
+
+		for (Integer num : list1) {
+			if(num.equals(1)){
+				list1.remove(num);
+			}
+			if(num.equals(2)){
+				list1.remove(num);
+			}
+		}
+		System.out.println(list1.size()); // 不报错，结果 1
 	}
 
 
