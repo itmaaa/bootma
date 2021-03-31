@@ -32,7 +32,7 @@ public abstract class Consumer implements Runnable{
     public void run() {
         for (;;){
             synchronized (queue){
-                while (empty()){
+                while (empty()){  // 有可能是被其他消费者唤醒，此时队列可能为空，继续等待
                     try {
                         queue.wait();
                     } catch (InterruptedException e) {

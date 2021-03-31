@@ -36,7 +36,7 @@ public abstract class Producter implements Runnable{
    public void run()  {
       for (;;){
          synchronized (queue){
-            while (full()){
+            while (full()){  //有可能是被其他生产者唤醒，此时队列可能满的，继续等待
                try {
                   queue.wait();
                } catch (InterruptedException e) {
