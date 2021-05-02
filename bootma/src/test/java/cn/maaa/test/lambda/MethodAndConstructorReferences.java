@@ -34,8 +34,8 @@ public class MethodAndConstructorReferences{
        /** PersonFactory<Person> personFactory = Person::new; 等价于
          PersonFactory<Person> personFactory = (firstName,lastName) ->  new Person(firstName,lastName );
          相当于创建了PersonFactory的匿名内部类实现接口create的逻辑为 return  new Person(firstName,lastName )*/
-
-        PersonFactory<Person> personFactory = (firstName,lastName) ->  new Person(firstName,lastName );
+       // PersonFactory<Person> personFactory = (firstName,lastName) ->  new Person(firstName,lastName );
+        PersonFactory<Person> personFactory = Person::new;
         Person person = personFactory.create("Peter", "Parker");
         System.out.println(person);
 
