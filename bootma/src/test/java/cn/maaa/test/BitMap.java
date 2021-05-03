@@ -1,6 +1,7 @@
 package cn.maaa.test;
 
-import java.util.Arrays;
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
 import java.util.BitSet;
 import java.util.Random;
 
@@ -17,12 +18,13 @@ public class BitMap {
     final static int mmin = 1000;
     final static int N = mmax - mmin + 1;
     public static void main(String args[]) {
-        int[] array = getArray(ARRNUM);
+        googleBloomFilter();
+       /* int[] array = getArray(ARRNUM);
         Arrays.sort(array);
         System.out.println("长度:"+ array.length+",原数组:");
         System.out.println( Arrays.toString(array));
         new BitMap().findDup_jdk(array);
-        new BitMap().findDuplicate(array);
+        new BitMap().findDuplicate(array);*/
     }
     public void findDup_jdk(int[] array) {
         System.out.println("*******调用JDK中的库方法--开始********");
@@ -45,6 +47,23 @@ public class BitMap {
         System.out.println("*******调用自己的位运算方法--结束********");
         int[] bitArray = setBit(array);
         printBitArray(bitArray);
+    }
+
+    public static void googleBloomFilter(){
+        System.out.println("*******调用googleBloomFilter--结束********");
+        // 创建布隆过滤器对象
+        BloomFilter<Integer> filter = BloomFilter.create(
+                Funnels.integerFunnel(),
+                1500,
+                0.01);
+        // 判断指定元素是否存在
+        System.out.println(filter.mightContain(1));
+        System.out.println(filter.mightContain(2));
+        // 将元素添加进布隆过滤器
+        filter.put(1);
+        filter.put(2);
+        System.out.println(filter.mightContain(1));
+        System.out.println(filter.mightContain(2));
     }
 
     public int[] setBit(int[] array) {// 首先取得数组位置下标 i/32, 然后 或上
