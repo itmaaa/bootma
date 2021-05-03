@@ -2,3 +2,5 @@
 target
 *.iml
 Maven_*.xml
+Project_Default.xml
+uiDesigner.xml

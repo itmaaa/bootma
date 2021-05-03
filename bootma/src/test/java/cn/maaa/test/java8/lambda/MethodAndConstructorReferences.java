@@ -1,4 +1,4 @@
-package cn.maaa.test.lambda;
+package cn.maaa.test.java8.lambda;
 
 import cn.hutool.core.io.LineHandler;
 import cn.hutool.core.lang.func.Func1;
@@ -35,6 +35,7 @@ public class MethodAndConstructorReferences{
          PersonFactory<Person> personFactory = (firstName,lastName) ->  new Person(firstName,lastName );
          相当于创建了PersonFactory的匿名内部类实现接口create的逻辑为 return  new Person(firstName,lastName )*/
        // PersonFactory<Person> personFactory = (firstName,lastName) ->  new Person(firstName,lastName );
+        // //1.调用静态函数，返回类型必须是functional-interface
         PersonFactory<Person> personFactory = Person::new;
         Person person = personFactory.create("Peter", "Parker");
         System.out.println(person);
@@ -43,6 +44,8 @@ public class MethodAndConstructorReferences{
         PersonFactory<Person> personFactory = person::showFirstName;
         String ma = personFactory.printFirstName("ma");
         System.out.println(ma);*/
+
+
     }
 }
 
