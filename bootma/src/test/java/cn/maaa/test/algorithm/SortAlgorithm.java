@@ -8,9 +8,12 @@ public class SortAlgorithm {
 
     public static void main(String[] args) {
         int[] numbers = {16,5,14,2,33,24,43,3,28,17,66};
-        bubbleSort(numbers);
-        selectionSort(numbers);
-        insertionSort(numbers);
+        //bubbleSort(numbers);
+        //selectionSort(numbers);
+        //insertionSort(numbers);
+        fastSort(numbers,0,numbers.length-1);
+        List<Integer> list = Ints.asList(numbers);
+        System.out.println(list);
     }
 
     //插入排序
@@ -80,6 +83,34 @@ public class SortAlgorithm {
         }
         List<Integer> list = Ints.asList(numbers);
         System.out.println(list);
+    }
+
+
+    public static void fastSort(int[] numbers,int l,int r){
+        if(l >= r)
+            return;
+
+        int left = l,right = r;
+        int pivot = numbers[left];
+
+        while (left < right){
+            while (left< right && numbers[right] >= pivot){
+                right--;
+            }
+            if(left < right){
+                numbers[left] = numbers[right];
+            }
+            while (left< right && numbers[left] <= pivot){
+                left++;
+            }
+            if(left < right){
+                numbers[right] = numbers[left];
+            }
+        }
+        numbers[left] = pivot;
+        fastSort(numbers,l,left-1);
+        fastSort(numbers,right+1,r);
+
     }
 
 }
